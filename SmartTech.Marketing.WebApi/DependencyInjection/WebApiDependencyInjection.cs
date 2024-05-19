@@ -1,7 +1,7 @@
 ﻿using AutoMapper;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
-using SmartTech.Marketing.Application.Contracts;
+using SmartTech.Marketing.Application.Contract;
 using SmartTech.Marketing.Application.DependencyInjection;
 using SmartTech.Marketing.Core.AppSetting;
 using SmartTech.Marketing.Core.DependencyInjection;
@@ -30,7 +30,7 @@ namespace SmartTech.Marketing.WebApi.DependencyInjection
         }
         private static void AddDataBase(IServiceCollection services)
         {
-            services.AddDbContext<DatabaseService>(opt => opt.UseSqlServer(SettingsDependancyInjection.SqlSettings.ConnectionString!));
+            services.AddDbContext<DatabaseService>(opt => opt.UseNpgsql(SettingsDependancyInjection.PosSettings.ConnectionString!));
             services.AddScoped<IDataBaseService, DatabaseService>();
         }
 

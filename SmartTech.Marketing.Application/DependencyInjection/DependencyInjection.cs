@@ -1,7 +1,7 @@
 ﻿using MediatR;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using SmartTech.Marketing.Application.Contracts;
+using SmartTech.Marketing.Application.Contract;
 using System;
 using System.Collections.Generic;
 using System.Linq;

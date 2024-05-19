@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace SmartTech.Marketing.Application.Contracts
+namespace SmartTech.Marketing.Application.Contract
 {
     public interface IMediatorImplementor
     {
