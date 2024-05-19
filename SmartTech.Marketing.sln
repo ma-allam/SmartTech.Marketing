@@ -1,0 +1,55 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.9.34622.214
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SmartTech.Marketing.Application", "SmartTech.Marketing.Application\SmartTech.Marketing.Application.csproj", "{A875F4E3-854C-4914-A80F-3D07A2942702}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SmartTech.Marketing.Core", "SmartTech.Marketing.Core\SmartTech.Marketing.Core.csproj", "{6532551D-171E-42A1-8F6F-0D4B00158DE5}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SmartTech.Marketing.Domain", "SmartTech.Marketing.Domain\SmartTech.Marketing.Domain.csproj", "{4C5C38BA-D915-49AE-8201-6DA5C2D9B1D2}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SmartTech.Marketing.Infrastructure", "SmartTech.Marketing.Infrastructure\SmartTech.Marketing.Infrastructure.csproj", "{B7FE307F-4C94-412C-87BA-BED84217A75A}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SmartTech.Marketing.Persistence", "SmartTech.Marketing.Persistence\SmartTech.Marketing.Persistence.csproj", "{3A4167FB-317C-4746-A43A-4D7AC05125FD}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SmartTech.Marketing.WebApi", "SmartTech.Marketing.WebApi\SmartTech.Marketing.WebApi.csproj", "{E3472A3A-4B41-4DB7-888C-8749DB3FB116}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{A875F4E3-854C-4914-A80F-3D07A2942702}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A875F4E3-854C-4914-A80F-3D07A2942702}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A875F4E3-854C-4914-A80F-3D07A2942702}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A875F4E3-854C-4914-A80F-3D07A2942702}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6532551D-171E-42A1-8F6F-0D4B00158DE5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6532551D-171E-42A1-8F6F-0D4B00158DE5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6532551D-171E-42A1-8F6F-0D4B00158DE5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6532551D-171E-42A1-8F6F-0D4B00158DE5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4C5C38BA-D915-49AE-8201-6DA5C2D9B1D2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4C5C38BA-D915-49AE-8201-6DA5C2D9B1D2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4C5C38BA-D915-49AE-8201-6DA5C2D9B1D2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4C5C38BA-D915-49AE-8201-6DA5C2D9B1D2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B7FE307F-4C94-412C-87BA-BED84217A75A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B7FE307F-4C94-412C-87BA-BED84217A75A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B7FE307F-4C94-412C-87BA-BED84217A75A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B7FE307F-4C94-412C-87BA-BED84217A75A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3A4167FB-317C-4746-A43A-4D7AC05125FD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3A4167FB-317C-4746-A43A-4D7AC05125FD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3A4167FB-317C-4746-A43A-4D7AC05125FD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3A4167FB-317C-4746-A43A-4D7AC05125FD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E3472A3A-4B41-4DB7-888C-8749DB3FB116}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E3472A3A-4B41-4DB7-888C-8749DB3FB116}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E3472A3A-4B41-4DB7-888C-8749DB3FB116}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E3472A3A-4B41-4DB7-888C-8749DB3FB116}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {F617300C-23F7-479E-B4C6-98745C98A920}
+	EndGlobalSection
+EndGlobal
