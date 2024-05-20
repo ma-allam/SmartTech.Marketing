@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace SmartTech.Marketing.Persistence.Context
 {
-    public partial class DatabaseServiceold
+    public partial class DatabaseService
     {
         public int DBSaveChanges()
         {

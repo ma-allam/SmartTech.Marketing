@@ -1,6 +1,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using SmartTech.Marketing.Application.Contract;
+using SmartTech.Marketing.Domain.Entities;
 
 
 namespace SmartTech.Marketing.WebApi.Controllers
@@ -26,6 +27,9 @@ namespace SmartTech.Marketing.WebApi.Controllers
         [HttpGet(Name = "GetWeatherForecast")]
         public  IEnumerable<WeatherForecast> Get()
         {
+            //Country c= new Country { Id=1,CountryName="EG",CountryPrefix="eg"};
+            //_dataBaseService.Country.Add(c);
+            //_dataBaseService.DBSaveChanges();
             var t = _dataBaseService.Country.ToList();
             return Enumerable.Range(1, 5).Select(index => new WeatherForecast
             {
