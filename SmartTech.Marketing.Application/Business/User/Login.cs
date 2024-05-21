@@ -9,7 +9,6 @@ using SmartTech.Marketing.Domain.Entities;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
-using System.Web.Http.ModelBinding;
 
 namespace SmartTech.Marketing.Application.Business.User
 {
