@@ -1,6 +1,7 @@
 ﻿using Ardalis.ApiEndpoints;
 using AutoMapper;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using SmartTech.Marketing.Application.Business;
 using Swashbuckle.AspNetCore.Annotations;
@@ -22,7 +23,7 @@ namespace SmartTech.Marketing.WebApi.EndPoints
             _mapper = mapper;
 
         }
-        //[Authorize]
+        [Authorize]
         [ApiVersion("0.0")]
         [HttpGet(TestEndPointRequest.Route)]
         [SwaggerOperation(Summary = "Test", Description = "Test ", OperationId = "SmartTech.Marketing.WebApi.EndPoints.Test", Tags = new[] { "SmartTech.Marketing.WebApi.EndPoints" })]
