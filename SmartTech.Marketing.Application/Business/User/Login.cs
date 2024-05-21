@@ -1,0 +1,70 @@
+﻿using MediatR;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.Logging;
+using Microsoft.IdentityModel.Tokens;
+using SmartTech.Marketing.Application.Contract;
+using SmartTech.Marketing.Domain.Entities;
+using System.IdentityModel.Tokens.Jwt;
+using System.Security.Claims;
+using System.Text;
+using System.Web.Http.ModelBinding;
+
+namespace SmartTech.Marketing.Application.Business.User
+{
+    public class LoginHandler : IRequestHandler<LoginHandlerInput, LoginHandlerOutput>
+    {
+        private readonly IDataBaseService _databaseService;
+        private readonly ILogger<LoginHandler> _logger;
+        private readonly UserManager<ApplicationUser> _userManager;
+        private readonly SignInManager<ApplicationUser> _signInManager;
+        private readonly IConfiguration _configuration;
+        public LoginHandler(ILogger<LoginHandler> logger, IDataBaseService databaseService, UserManager<ApplicationUser> userManager, SignInManager<ApplicationUser> signInManager, IConfiguration configuration)
+        {
+            _logger = logger;
+            _databaseService = databaseService;
+            _userManager = userManager;
+            _signInManager = signInManager;
+            _configuration = configuration;
+        }
+        public async Task<LoginHandlerOutput> Handle(LoginHandlerInput request, CancellationToken cancellationToken)
+        {
+            _logger.LogInformation("Handling Login business logic");
+            LoginHandlerOutput output = new LoginHandlerOutput(request.CorrelationId());
+         
+
+            var user = await _userManager.FindByNameAsync(request.Username);
+            if (user != null && await _userManager.CheckPasswordAsync(user, request.Password))
+            {
+                var token = GenerateJwtToken(user);
+                output.Token=token;
+            }
+            else
+            {
+                throw new InvalidOperationException();
+            }
+            return output;
+        }
+        public string GenerateJwtToken(ApplicationUser user)
+        {
+            var claims = new[]
+            {
+            new Claim(JwtRegisteredClaimNames.Sub, user.UserName),
+            new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString())
+        };
+
+            var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration["Jwt:Key"]));
+            var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
+
+            var token = new JwtSecurityToken(
+                issuer: _configuration["Jwt:Issuer"],
+                audience: _configuration["Jwt:Audience"],
+                claims: claims,
+                expires: DateTime.Now.AddMinutes(Convert.ToDouble(_configuration["Jwt:ExpiryMinutes"])),
+                signingCredentials: creds);
+
+            return new JwtSecurityTokenHandler().WriteToken(token);
+        }
+    }
+}
