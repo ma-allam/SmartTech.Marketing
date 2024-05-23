@@ -8,4 +8,5 @@ namespace SmartTech.Marketing.Application.Business.User
         public LoginHandlerOutput(Guid correlationId) : base(correlationId) { }
         public string Token { get; set; }
     }
+    
 }

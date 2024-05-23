@@ -1,10 +1,14 @@
-﻿using MediatR;
+﻿using SmartTech.Marketing.Core.Exceptions;
+using MediatR;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 using Microsoft.IdentityModel.Tokens;
+using Newtonsoft.Json;
 using SmartTech.Marketing.Application.Contract;
+using SmartTech.Marketing.Core.Auth.JWT;
+using SmartTech.Marketing.Core.Auth.User;
 using SmartTech.Marketing.Domain.Entities;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
@@ -34,24 +38,33 @@ namespace SmartTech.Marketing.Application.Business.User
          
 
             var user = await _userManager.FindByNameAsync(request.Username);
-            if (user != null && await _userManager.CheckPasswordAsync(user, request.Password))
+            if (user == null) throw new WebApiException($"Account with {request.Username} User Name Not Found, Please contact system administrator");
+            if (await _userManager.CheckPasswordAsync(user, request.Password))
             {
                 var token = GenerateJwtToken(user);
                 output.Token=token;
             }
             else
             {
-                throw new InvalidOperationException();
+                throw new WebApiException("Please Check  Password");
+                //throw new InvalidOperationException();
             }
             return output;
         }
         public string GenerateJwtToken(ApplicationUser user)
         {
+            ActiveContext activeContext = new ActiveContext { UserName=user.UserName};
+            var data = JsonConvert.SerializeObject(activeContext, Formatting.None,
+                         new JsonSerializerSettings()
+                         {
+                             ReferenceLoopHandling = ReferenceLoopHandling.Ignore
+                         });
             var claims = new[]
             {
             new Claim(JwtRegisteredClaimNames.Sub, user.UserName),
-            new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString())
-        };
+            new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
+            new Claim(JWTClaims.ActiveContext, data)
+            };
 
             var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration["Jwt:Key"]));
             var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
