@@ -10,8 +10,8 @@ namespace SmartTech.Marketing.Domain.Entities;
 /// بيانات العميل 
 /// اسم - نوع - تليفون - ايميل - دولة
 /// </summary>
-[Table("clients")]
-public partial class Clients
+[Table("client")]
+public partial class Client
 {
     [Key]
     [Column("id")]
@@ -36,14 +36,14 @@ public partial class Clients
     public int CountryId { get; set; }
 
     [ForeignKey("ClientType")]
-    [InverseProperty("Clients")]
+    [InverseProperty("Client")]
     public virtual ClientType ClientTypeNavigation { get; set; } = null!;
 
     [InverseProperty("Client")]
     public virtual ICollection<Contracts> Contracts { get; set; } = new List<Contracts>();
 
     [ForeignKey("CountryId")]
-    [InverseProperty("Clients")]
+    [InverseProperty("Client")]
     public virtual Country Country { get; set; } = null!;
 
     [InverseProperty("Client")]

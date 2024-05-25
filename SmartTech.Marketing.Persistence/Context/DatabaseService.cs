@@ -21,7 +21,7 @@ public partial class DatabaseService : IdentityDbContext<ApplicationUser>,IDataB
 
     public virtual DbSet<ClientType> ClientType { get; set; }
 
-    public virtual DbSet<Clients> Clients { get; set; }
+    public virtual DbSet<Client> Client { get; set; }
 
     public virtual DbSet<ContractAttachments> ContractAttachments { get; set; }
 

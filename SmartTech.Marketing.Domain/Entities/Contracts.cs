@@ -48,7 +48,7 @@ public partial class Contracts
 
     [ForeignKey("ClientId")]
     [InverseProperty("Contracts")]
-    public virtual Clients Client { get; set; } = null!;
+    public virtual Client Client { get; set; } = null!;
 
     [InverseProperty("Contract")]
     public virtual ICollection<ContractAttachments> ContractAttachments { get; set; } = new List<ContractAttachments>();

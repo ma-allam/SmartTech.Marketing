@@ -13,7 +13,7 @@ namespace SmartTech.Marketing.Application.Contract
     {
         public DbSet<ClientType> ClientType { get; set; }
 
-        public DbSet<Clients> Clients { get; set; }
+        public DbSet<Client> Client { get; set; }
 
         public DbSet<ContractAttachments> ContractAttachments { get; set; }
 
