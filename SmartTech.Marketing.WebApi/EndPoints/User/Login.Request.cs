@@ -5,7 +5,7 @@ namespace SmartTech.Marketing.WebApi.EndPoints.User
 {
     public class LoginEndPointRequest : BaseRequest
     {
-        public const string Route = "/api/user/Login/";
+        public const string Route = "/api/user/v{version:apiVersion}/Login/";
         [Required]
         public string Username { get; set; }
 

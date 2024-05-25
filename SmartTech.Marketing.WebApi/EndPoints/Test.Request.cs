@@ -4,6 +4,6 @@ namespace SmartTech.Marketing.WebApi.EndPoints
 {
     public class TestEndPointRequest : BaseRequest
     {
-        public const string Route = "/API/Test/";
+        public const string Route = "/api/user/v{version:apiVersion}/Test/";
     }
 }
