@@ -5,7 +5,7 @@ namespace SmartTech.Marketing.WebApi.EndPoints.User
 {
     public class RegisterEndPointRequest : BaseRequest
     {
-        public const string Route = "/api/user/Register/";
+        public const string Route = "/api/user/v{version:apiVersion}/Register/";
      
 
         [Required]
