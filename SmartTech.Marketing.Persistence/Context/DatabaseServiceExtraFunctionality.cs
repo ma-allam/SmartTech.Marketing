@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.EntityFrameworkCore.Storage;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -15,6 +16,10 @@ namespace SmartTech.Marketing.Persistence.Context
         public async Task<int> DBSaveChangesAsync(CancellationToken cancellationToken = default)
         {
             return await SaveChangesAsync(acceptAllChangesOnSuccess: true, cancellationToken);
+        }
+        public Task<IDbContextTransaction> BeginTransactionAsync(CancellationToken cancellationToken = default)
+        {
+            return Database.BeginTransactionAsync(cancellationToken);
         }
     }
 }

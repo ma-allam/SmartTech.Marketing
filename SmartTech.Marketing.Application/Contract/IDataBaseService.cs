@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Storage;
 using SmartTech.Marketing.Domain.Entities;
 using System;
 using System.Collections.Generic;
@@ -64,6 +65,8 @@ namespace SmartTech.Marketing.Application.Contract
         public DbSet<SmsTargets> SmsTargets { get; set; }
         int DBSaveChanges();
         Task<int> DBSaveChangesAsync(CancellationToken cancellationToken = default);
+        Task<IDbContextTransaction> BeginTransactionAsync(CancellationToken cancellationToken = default);
+
 
     }
 
