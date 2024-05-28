@@ -33,7 +33,7 @@ public partial class Country
     public string CountryPrefix { get; set; } = null!;
 
     [InverseProperty("Country")]
-    public virtual ICollection<Clients> Clients { get; set; } = new List<Clients>();
+    public virtual ICollection<Client> Client { get; set; } = new List<Client>();
 
     [InverseProperty("Country")]
     public virtual ICollection<SmsTargets> SmsTargets { get; set; } = new List<SmsTargets>();

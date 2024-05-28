@@ -19,6 +19,7 @@ namespace SmartTech.Marketing.Application.Business.User
         private readonly UserManager<ApplicationUser> _userManager;
         private readonly SignInManager<ApplicationUser> _signInManager;
         private readonly IConfiguration _configuration;
+
         public RegisterHandler(ILogger<LoginHandler> logger, IDataBaseService databaseService, UserManager<ApplicationUser> userManager, SignInManager<ApplicationUser> signInManager, IConfiguration configuration)
         {
             _logger = logger;
@@ -27,49 +28,66 @@ namespace SmartTech.Marketing.Application.Business.User
             _signInManager = signInManager;
             _configuration = configuration;
         }
+
         public async Task<RegisterHandlerOutput> Handle(RegisterHandlerInput request, CancellationToken cancellationToken)
         {
             _logger.LogInformation("Handling Register business logic");
             RegisterHandlerOutput output = new RegisterHandlerOutput(request.CorrelationId());
 
-            //if (!ModelState.IsValid)
-            //{
-            //    return BadRequest(ModelState);
-            //}
-
-            var user = new ApplicationUser
+            using (var transaction = await _databaseService.BeginTransactionAsync(cancellationToken))
             {
-                UserName = request.Username,
-                Email = request.Email
-            };
+                try
+                {
+                    var user = new ApplicationUser
+                    {
+                        UserName = request.Username,
+                        Email = request.Email,
+                    };
 
-            var result = await _userManager.CreateAsync(user, request.Password);
-            if (result.Succeeded)
-            {
-                // Optionally, sign in the user after registration
-                await _signInManager.SignInAsync(user, isPersistent: false);
-                var token = GenerateJwtToken(user);
-                output.Token=token;
+                    var result = await _userManager.CreateAsync(user, request.Password);
+
+                    if (!result.Succeeded)
+                    {
+                        throw new Exception("User creation failed: " + string.Join(", ", result.Errors.Select(e => e.Description)));
+                    }
+
+                    var client = new Client
+                    {
+                        Name = user.UserName,
+                        Email = user.Email,
+                        ClientType = 1,
+                        CountryId = 1,
+                        UserId = user.Id
+                    };
+
+                    _databaseService.Client.Add(client);
+                    await _databaseService.DBSaveChangesAsync(cancellationToken);
+
+                    await transaction.CommitAsync(cancellationToken);
+
+                    // Optionally, sign in the user after registration
+                    await _signInManager.SignInAsync(user, isPersistent: false);
+                    var token = GenerateJwtToken(user);
+                    output.Token = token;
+                }
+                catch (Exception ex)
+                {
+                    await transaction.RollbackAsync(cancellationToken);
+                    _logger.LogError(ex, "Error occurred during user registration");
+                    throw;
+                }
             }
-
-            //foreach (var error in result.Errors)
-            //{
-            //    ModelState.AddModelError(string.Empty, error.Description);
-            //}
-
-            //return BadRequest(ModelState);
-
-
 
             return output;
         }
+
         public string GenerateJwtToken(ApplicationUser user)
         {
             var claims = new[]
             {
-            new Claim(JwtRegisteredClaimNames.Sub, user.UserName),
-            new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString())
-        };
+                new Claim(JwtRegisteredClaimNames.Sub, user.UserName),
+                new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString())
+            };
 
             var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration["Jwt:Key"]));
             var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);

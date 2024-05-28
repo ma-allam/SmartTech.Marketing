@@ -9,6 +9,7 @@ namespace SmartTech.Marketing.Core.Auth.User
     public class ActiveContext
     {
         public string UserName { get; set; }
+        public int ClientId { get; set; }
         public static ActiveContext Build() => new ActiveContext();
 
     }

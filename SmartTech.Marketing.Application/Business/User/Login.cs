@@ -41,7 +41,7 @@ namespace SmartTech.Marketing.Application.Business.User
             if (user == null) throw new WebApiException($"Account with {request.Username} User Name Not Found, Please contact system administrator");
             if (await _userManager.CheckPasswordAsync(user, request.Password))
             {
-                var token = GenerateJwtToken(user);
+                var token =await GenerateJwtToken(user);
                 output.Token=token;
             }
             else
@@ -51,9 +51,10 @@ namespace SmartTech.Marketing.Application.Business.User
             }
             return output;
         }
-        public string GenerateJwtToken(ApplicationUser user)
+        public async Task< string >GenerateJwtToken(ApplicationUser user)
         {
-            ActiveContext activeContext = new ActiveContext { UserName=user.UserName};
+            var clientid = await _databaseService.Client.Where(o => o.UserId == user.Id).Select(o => o.Id).FirstOrDefaultAsync();
+            ActiveContext activeContext = new ActiveContext { UserName=user.UserName,ClientId=clientid};
             var data = JsonConvert.SerializeObject(activeContext, Formatting.None,
                          new JsonSerializerSettings()
                          {

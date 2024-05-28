@@ -18,10 +18,19 @@ public partial class DatabaseService : IdentityDbContext<ApplicationUser>,IDataB
     {
         Database.EnsureCreated();
     }
+    protected override void OnModelCreating(ModelBuilder modelBuilder)
+    {
+        base.OnModelCreating(modelBuilder);
 
+        modelBuilder.Entity<ApplicationUser>()
+            .HasOne(a => a.Client)
+            .WithOne(c => c.User)
+            .HasForeignKey<Client>(c => c.UserId)
+            .OnDelete(DeleteBehavior.Cascade); // Or another delete behavior as appropriate
+    }
     public virtual DbSet<ClientType> ClientType { get; set; }
 
-    public virtual DbSet<Clients> Clients { get; set; }
+    public virtual DbSet<Client> Client { get; set; }
 
     public virtual DbSet<ContractAttachments> ContractAttachments { get; set; }
 

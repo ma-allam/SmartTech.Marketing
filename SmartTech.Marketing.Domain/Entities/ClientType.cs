@@ -21,5 +21,5 @@ public partial class ClientType
     public string Type { get; set; } = null!;
 
     [InverseProperty("ClientTypeNavigation")]
-    public virtual ICollection<Clients> Clients { get; set; } = new List<Clients>();
+    public virtual ICollection<Client> Client { get; set; } = new List<Client>();
 }

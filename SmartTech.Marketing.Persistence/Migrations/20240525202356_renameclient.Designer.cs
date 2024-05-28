@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using NetTopologySuite.Geometries;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
@@ -12,9 +13,11 @@ using SmartTech.Marketing.Persistence.Context;
 namespace SmartTech.Marketing.Persistence.Migrations
 {
     [DbContext(typeof(DatabaseService))]
-    partial class DatabaseServiceModelSnapshot : ModelSnapshot
+    [Migration("20240525202356_renameclient")]
+    partial class renameclient
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -254,19 +257,11 @@ namespace SmartTech.Marketing.Persistence.Migrations
                         .HasColumnType("text")
                         .HasColumnName("phone_number");
 
-                    b.Property<string>("UserId")
-                        .IsRequired()
-                        .HasColumnType("text")
-                        .HasColumnName("user_id");
-
                     b.HasKey("Id");
 
                     b.HasIndex("ClientType");
 
                     b.HasIndex("CountryId");
-
-                    b.HasIndex("UserId")
-                        .IsUnique();
 
                     b.ToTable("client");
                 });
@@ -1179,17 +1174,9 @@ namespace SmartTech.Marketing.Persistence.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("SmartTech.Marketing.Domain.Entities.ApplicationUser", "User")
-                        .WithOne("Client")
-                        .HasForeignKey("SmartTech.Marketing.Domain.Entities.Client", "UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
                     b.Navigation("ClientTypeNavigation");
 
                     b.Navigation("Country");
-
-                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("SmartTech.Marketing.Domain.Entities.ContractAttachments", b =>
@@ -1455,12 +1442,6 @@ namespace SmartTech.Marketing.Persistence.Migrations
                     b.Navigation("Country");
 
                     b.Navigation("SmsTargetTypeSubCategory");
-                });
-
-            modelBuilder.Entity("SmartTech.Marketing.Domain.Entities.ApplicationUser", b =>
-                {
-                    b.Navigation("Client")
-                        .IsRequired();
                 });
 
             modelBuilder.Entity("SmartTech.Marketing.Domain.Entities.Client", b =>
