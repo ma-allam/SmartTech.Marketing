@@ -1,7 +1,9 @@
 ﻿using MediatR;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using SmartTech.Marketing.Application.Contract;
+using SmartTech.Marketing.Domain.Entities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -16,6 +18,7 @@ namespace SmartTech.Marketing.Application.DependencyInjection
         public static void AddApplicationDependencyInjection(this IServiceCollection services, IConfiguration configuration)
         {
             services.AddMediatR(cfg => cfg.RegisterServicesFromAssemblies(typeof(IMediatorImplementor).Assembly));
+            services.AddScoped<SignInManager<ApplicationUser>, CustomSignInManager>();
         }
     }
 }

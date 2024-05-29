@@ -704,6 +704,256 @@ namespace SmartTech.Marketing.Persistence.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("country");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            CountryName = "United States",
+                            CountryPrefix = "US",
+                            CountyGeometry = (NetTopologySuite.Geometries.Point)new NetTopologySuite.IO.WKTReader().Read("SRID=4326;POINT (-98.5795 39.8283)"),
+                            Geom = (NetTopologySuite.Geometries.Point)new NetTopologySuite.IO.WKTReader().Read("SRID=4326;POINT (-98.5795 39.8283)")
+                        },
+                        new
+                        {
+                            Id = 2,
+                            CountryName = "Canada",
+                            CountryPrefix = "CA",
+                            CountyGeometry = (NetTopologySuite.Geometries.Point)new NetTopologySuite.IO.WKTReader().Read("SRID=4326;POINT (-106.3468 56.1304)"),
+                            Geom = (NetTopologySuite.Geometries.Point)new NetTopologySuite.IO.WKTReader().Read("SRID=4326;POINT (-106.3468 56.1304)")
+                        },
+                        new
+                        {
+                            Id = 3,
+                            CountryName = "United Kingdom",
+                            CountryPrefix = "GB",
+                            CountyGeometry = (NetTopologySuite.Geometries.Point)new NetTopologySuite.IO.WKTReader().Read("SRID=4326;POINT (-3.436 55.3781)"),
+                            Geom = (NetTopologySuite.Geometries.Point)new NetTopologySuite.IO.WKTReader().Read("SRID=4326;POINT (-3.436 55.3781)")
+                        },
+                        new
+                        {
+                            Id = 4,
+                            CountryName = "Germany",
+                            CountryPrefix = "DE",
+                            CountyGeometry = (NetTopologySuite.Geometries.Point)new NetTopologySuite.IO.WKTReader().Read("SRID=4326;POINT (10.4515 51.1657)"),
+                            Geom = (NetTopologySuite.Geometries.Point)new NetTopologySuite.IO.WKTReader().Read("SRID=4326;POINT (10.4515 51.1657)")
+                        },
+                        new
+                        {
+                            Id = 5,
+                            CountryName = "France",
+                            CountryPrefix = "FR",
+                            CountyGeometry = (NetTopologySuite.Geometries.Point)new NetTopologySuite.IO.WKTReader().Read("SRID=4326;POINT (2.2137 46.6034)"),
+                            Geom = (NetTopologySuite.Geometries.Point)new NetTopologySuite.IO.WKTReader().Read("SRID=4326;POINT (2.2137 46.6034)")
+                        },
+                        new
+                        {
+                            Id = 6,
+                            CountryName = "Australia",
+                            CountryPrefix = "AU",
+                            CountyGeometry = (NetTopologySuite.Geometries.Point)new NetTopologySuite.IO.WKTReader().Read("SRID=4326;POINT (133.7751 -25.2744)"),
+                            Geom = (NetTopologySuite.Geometries.Point)new NetTopologySuite.IO.WKTReader().Read("SRID=4326;POINT (133.7751 -25.2744)")
+                        },
+                        new
+                        {
+                            Id = 7,
+                            CountryName = "Brazil",
+                            CountryPrefix = "BR",
+                            CountyGeometry = (NetTopologySuite.Geometries.Point)new NetTopologySuite.IO.WKTReader().Read("SRID=4326;POINT (-51.9253 -14.235)"),
+                            Geom = (NetTopologySuite.Geometries.Point)new NetTopologySuite.IO.WKTReader().Read("SRID=4326;POINT (-51.9253 -14.235)")
+                        },
+                        new
+                        {
+                            Id = 8,
+                            CountryName = "India",
+                            CountryPrefix = "IN",
+                            CountyGeometry = (NetTopologySuite.Geometries.Point)new NetTopologySuite.IO.WKTReader().Read("SRID=4326;POINT (78.9629 20.5937)"),
+                            Geom = (NetTopologySuite.Geometries.Point)new NetTopologySuite.IO.WKTReader().Read("SRID=4326;POINT (78.9629 20.5937)")
+                        },
+                        new
+                        {
+                            Id = 9,
+                            CountryName = "China",
+                            CountryPrefix = "CN",
+                            CountyGeometry = (NetTopologySuite.Geometries.Point)new NetTopologySuite.IO.WKTReader().Read("SRID=4326;POINT (104.1954 35.8617)"),
+                            Geom = (NetTopologySuite.Geometries.Point)new NetTopologySuite.IO.WKTReader().Read("SRID=4326;POINT (104.1954 35.8617)")
+                        },
+                        new
+                        {
+                            Id = 10,
+                            CountryName = "Japan",
+                            CountryPrefix = "JP",
+                            CountyGeometry = (NetTopologySuite.Geometries.Point)new NetTopologySuite.IO.WKTReader().Read("SRID=4326;POINT (138.2529 36.2048)"),
+                            Geom = (NetTopologySuite.Geometries.Point)new NetTopologySuite.IO.WKTReader().Read("SRID=4326;POINT (138.2529 36.2048)")
+                        },
+                        new
+                        {
+                            Id = 11,
+                            CountryName = "Nigeria",
+                            CountryPrefix = "NG",
+                            CountyGeometry = (NetTopologySuite.Geometries.Point)new NetTopologySuite.IO.WKTReader().Read("SRID=4326;POINT (8.6753 9.082)"),
+                            Geom = (NetTopologySuite.Geometries.Point)new NetTopologySuite.IO.WKTReader().Read("SRID=4326;POINT (8.6753 9.082)")
+                        },
+                        new
+                        {
+                            Id = 12,
+                            CountryName = "Egypt",
+                            CountryPrefix = "EG",
+                            CountyGeometry = (NetTopologySuite.Geometries.Point)new NetTopologySuite.IO.WKTReader().Read("SRID=4326;POINT (30.8025 26.8206)"),
+                            Geom = (NetTopologySuite.Geometries.Point)new NetTopologySuite.IO.WKTReader().Read("SRID=4326;POINT (30.8025 26.8206)")
+                        },
+                        new
+                        {
+                            Id = 13,
+                            CountryName = "South Africa",
+                            CountryPrefix = "ZA",
+                            CountyGeometry = (NetTopologySuite.Geometries.Point)new NetTopologySuite.IO.WKTReader().Read("SRID=4326;POINT (22.9375 -30.5595)"),
+                            Geom = (NetTopologySuite.Geometries.Point)new NetTopologySuite.IO.WKTReader().Read("SRID=4326;POINT (22.9375 -30.5595)")
+                        },
+                        new
+                        {
+                            Id = 14,
+                            CountryName = "Kenya",
+                            CountryPrefix = "KE",
+                            CountyGeometry = (NetTopologySuite.Geometries.Point)new NetTopologySuite.IO.WKTReader().Read("SRID=4326;POINT (36.8219 -1.2921)"),
+                            Geom = (NetTopologySuite.Geometries.Point)new NetTopologySuite.IO.WKTReader().Read("SRID=4326;POINT (36.8219 -1.2921)")
+                        },
+                        new
+                        {
+                            Id = 15,
+                            CountryName = "Ghana",
+                            CountryPrefix = "GH",
+                            CountyGeometry = (NetTopologySuite.Geometries.Point)new NetTopologySuite.IO.WKTReader().Read("SRID=4326;POINT (-1.0232 7.9465)"),
+                            Geom = (NetTopologySuite.Geometries.Point)new NetTopologySuite.IO.WKTReader().Read("SRID=4326;POINT (-1.0232 7.9465)")
+                        },
+                        new
+                        {
+                            Id = 16,
+                            CountryName = "Ethiopia",
+                            CountryPrefix = "ET",
+                            CountyGeometry = (NetTopologySuite.Geometries.Point)new NetTopologySuite.IO.WKTReader().Read("SRID=4326;POINT (39.9551 9.145)"),
+                            Geom = (NetTopologySuite.Geometries.Point)new NetTopologySuite.IO.WKTReader().Read("SRID=4326;POINT (39.9551 9.145)")
+                        },
+                        new
+                        {
+                            Id = 17,
+                            CountryName = "Tanzania",
+                            CountryPrefix = "TZ",
+                            CountyGeometry = (NetTopologySuite.Geometries.Point)new NetTopologySuite.IO.WKTReader().Read("SRID=4326;POINT (34.8888 -6.369)"),
+                            Geom = (NetTopologySuite.Geometries.Point)new NetTopologySuite.IO.WKTReader().Read("SRID=4326;POINT (34.8888 -6.369)")
+                        },
+                        new
+                        {
+                            Id = 18,
+                            CountryName = "Uganda",
+                            CountryPrefix = "UG",
+                            CountyGeometry = (NetTopologySuite.Geometries.Point)new NetTopologySuite.IO.WKTReader().Read("SRID=4326;POINT (32.2903 1.3733)"),
+                            Geom = (NetTopologySuite.Geometries.Point)new NetTopologySuite.IO.WKTReader().Read("SRID=4326;POINT (32.2903 1.3733)")
+                        },
+                        new
+                        {
+                            Id = 19,
+                            CountryName = "Algeria",
+                            CountryPrefix = "DZ",
+                            CountyGeometry = (NetTopologySuite.Geometries.Point)new NetTopologySuite.IO.WKTReader().Read("SRID=4326;POINT (1.6596 28.0339)"),
+                            Geom = (NetTopologySuite.Geometries.Point)new NetTopologySuite.IO.WKTReader().Read("SRID=4326;POINT (1.6596 28.0339)")
+                        },
+                        new
+                        {
+                            Id = 20,
+                            CountryName = "Morocco",
+                            CountryPrefix = "MA",
+                            CountyGeometry = (NetTopologySuite.Geometries.Point)new NetTopologySuite.IO.WKTReader().Read("SRID=4326;POINT (-7.0926 31.7917)"),
+                            Geom = (NetTopologySuite.Geometries.Point)new NetTopologySuite.IO.WKTReader().Read("SRID=4326;POINT (-7.0926 31.7917)")
+                        },
+                        new
+                        {
+                            Id = 21,
+                            CountryName = "Saudi Arabia",
+                            CountryPrefix = "SA",
+                            CountyGeometry = (NetTopologySuite.Geometries.Point)new NetTopologySuite.IO.WKTReader().Read("SRID=4326;POINT (45.0792 23.8859)"),
+                            Geom = (NetTopologySuite.Geometries.Point)new NetTopologySuite.IO.WKTReader().Read("SRID=4326;POINT (45.0792 23.8859)")
+                        },
+                        new
+                        {
+                            Id = 22,
+                            CountryName = "United Arab Emirates",
+                            CountryPrefix = "AE",
+                            CountyGeometry = (NetTopologySuite.Geometries.Point)new NetTopologySuite.IO.WKTReader().Read("SRID=4326;POINT (53.8478 23.4241)"),
+                            Geom = (NetTopologySuite.Geometries.Point)new NetTopologySuite.IO.WKTReader().Read("SRID=4326;POINT (53.8478 23.4241)")
+                        },
+                        new
+                        {
+                            Id = 23,
+                            CountryName = "Qatar",
+                            CountryPrefix = "QA",
+                            CountyGeometry = (NetTopologySuite.Geometries.Point)new NetTopologySuite.IO.WKTReader().Read("SRID=4326;POINT (51.1839 25.3548)"),
+                            Geom = (NetTopologySuite.Geometries.Point)new NetTopologySuite.IO.WKTReader().Read("SRID=4326;POINT (51.1839 25.3548)")
+                        },
+                        new
+                        {
+                            Id = 24,
+                            CountryName = "Kuwait",
+                            CountryPrefix = "KW",
+                            CountyGeometry = (NetTopologySuite.Geometries.Point)new NetTopologySuite.IO.WKTReader().Read("SRID=4326;POINT (47.4818 29.3759)"),
+                            Geom = (NetTopologySuite.Geometries.Point)new NetTopologySuite.IO.WKTReader().Read("SRID=4326;POINT (47.4818 29.3759)")
+                        },
+                        new
+                        {
+                            Id = 25,
+                            CountryName = "Oman",
+                            CountryPrefix = "OM",
+                            CountyGeometry = (NetTopologySuite.Geometries.Point)new NetTopologySuite.IO.WKTReader().Read("SRID=4326;POINT (57.5836 21.5126)"),
+                            Geom = (NetTopologySuite.Geometries.Point)new NetTopologySuite.IO.WKTReader().Read("SRID=4326;POINT (57.5836 21.5126)")
+                        },
+                        new
+                        {
+                            Id = 26,
+                            CountryName = "Bahrain",
+                            CountryPrefix = "BH",
+                            CountyGeometry = (NetTopologySuite.Geometries.Point)new NetTopologySuite.IO.WKTReader().Read("SRID=4326;POINT (50.5555 26.0275)"),
+                            Geom = (NetTopologySuite.Geometries.Point)new NetTopologySuite.IO.WKTReader().Read("SRID=4326;POINT (50.5555 26.0275)")
+                        },
+                        new
+                        {
+                            Id = 27,
+                            CountryName = "Yemen",
+                            CountryPrefix = "YE",
+                            CountyGeometry = (NetTopologySuite.Geometries.Point)new NetTopologySuite.IO.WKTReader().Read("SRID=4326;POINT (48.5164 15.5527)"),
+                            Geom = (NetTopologySuite.Geometries.Point)new NetTopologySuite.IO.WKTReader().Read("SRID=4326;POINT (48.5164 15.5527)")
+                        },
+                        new
+                        {
+                            Id = 28,
+                            CountryName = "Jordan",
+                            CountryPrefix = "JO",
+                            CountyGeometry = (NetTopologySuite.Geometries.Point)new NetTopologySuite.IO.WKTReader().Read("SRID=4326;POINT (36.2384 30.5852)"),
+                            Geom = (NetTopologySuite.Geometries.Point)new NetTopologySuite.IO.WKTReader().Read("SRID=4326;POINT (36.2384 30.5852)")
+                        },
+                        new
+                        {
+                            Id = 29,
+                            CountryName = "Lebanon",
+                            CountryPrefix = "LB",
+                            CountyGeometry = (NetTopologySuite.Geometries.Point)new NetTopologySuite.IO.WKTReader().Read("SRID=4326;POINT (35.8623 33.8547)"),
+                            Geom = (NetTopologySuite.Geometries.Point)new NetTopologySuite.IO.WKTReader().Read("SRID=4326;POINT (35.8623 33.8547)")
+                        },
+                        new
+                        {
+                            Id = 30,
+                            CountryName = "Syria",
+                            CountryPrefix = "SY",
+                            CountyGeometry = (NetTopologySuite.Geometries.Point)new NetTopologySuite.IO.WKTReader().Read("SRID=4326;POINT (38.9968 34.8021)"),
+                            Geom = (NetTopologySuite.Geometries.Point)new NetTopologySuite.IO.WKTReader().Read("SRID=4326;POINT (38.9968 34.8021)")
+                        },
+                        new
+                        {
+                            Id = 31,
+                            CountryName = "Iraq",
+                            CountryPrefix = "IQ",
+                            CountyGeometry = (NetTopologySuite.Geometries.Point)new NetTopologySuite.IO.WKTReader().Read("SRID=4326;POINT (43.6793 33.2232)"),
+                            Geom = (NetTopologySuite.Geometries.Point)new NetTopologySuite.IO.WKTReader().Read("SRID=4326;POINT (43.6793 33.2232)")
+                        });
                 });
 
             modelBuilder.Entity("SmartTech.Marketing.Domain.Entities.Currency", b =>
