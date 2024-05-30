@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
+using NetTopologySuite.Geometries;
 using SmartTech.Marketing.Application.Contract;
 using SmartTech.Marketing.Domain.Entities;
 
@@ -27,6 +28,7 @@ public partial class DatabaseService : IdentityDbContext<ApplicationUser>,IDataB
             .WithOne(c => c.User)
             .HasForeignKey<Client>(c => c.UserId)
             .OnDelete(DeleteBehavior.Cascade); // Or another delete behavior as appropriate
+      
     }
     public virtual DbSet<ClientType> ClientType { get; set; }
 
