@@ -22,12 +22,13 @@ namespace SmartTech.Marketing.Application.Business.Clients.Query
             {
                 ClientId = o.Id,
                 Name = o.Name,
-                Email = o.Email,
-                Username = o.User.UserName,
-                PhoneNumber = o.PhoneNumber,
+                Email = o.Email??"",
+                Username = o.User.UserName??"",
+                PhoneNumber = o.PhoneNumber ?? "",
                 Country = new Data { Id = o.CountryId, Name = o.Country.CountryName },
                 ClientType = new Data { Id = o.ClientType, Name = o.ClientTypeNavigation.Type }
             }).FirstOrDefaultAsync();
+
             return output;
         }
     }

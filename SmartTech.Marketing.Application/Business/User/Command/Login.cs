@@ -42,6 +42,7 @@ namespace SmartTech.Marketing.Application.Business.User.Command
             LoginHandlerOutput output = new LoginHandlerOutput(request.CorrelationId());
 
             var user = await _userManager.FindByNameAsync(request.Username);
+            var roles = await _userManager.GetRolesAsync(user);
             if (user == null) throw new WebApiException($"Account with {request.Username} User Name Not Found, Please contact system administrator");
 
             var result = await _signInManager.PasswordSignInAsync(user, request.Password, isPersistent: false, lockoutOnFailure: true);
@@ -82,16 +83,20 @@ namespace SmartTech.Marketing.Application.Business.User.Command
             var clientid = await _databaseService.Client.Where(o => o.UserId == user.Id).Select(o => o.Id).FirstOrDefaultAsync();
             ActiveContext activeContext = new ActiveContext { UserName = user.UserName, ClientId = clientid };
             var data = JsonConvert.SerializeObject(activeContext, Formatting.None,
-                         new JsonSerializerSettings()
-                         {
-                             ReferenceLoopHandling = ReferenceLoopHandling.Ignore
-                         });
-            var claims = new[]
-            {
-                new Claim(JwtRegisteredClaimNames.Sub, user.UserName),
-                new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
-                new Claim(JWTClaims.ActiveContext, data)
-            };
+                             new JsonSerializerSettings()
+                             {
+                                 ReferenceLoopHandling = ReferenceLoopHandling.Ignore
+                             });
+
+            var roles = await _userManager.GetRolesAsync(user);
+            var roleClaims = roles.Select(role => new Claim(ClaimTypes.Role, role)).ToList();
+
+            var claims = new List<Claim>
+    {
+        new Claim(JwtRegisteredClaimNames.Sub, user.UserName),
+        new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
+        new Claim(JWTClaims.ActiveContext, data)
+    }.Union(roleClaims);
 
             var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration["Jwt:Key"]));
             var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
@@ -105,5 +110,6 @@ namespace SmartTech.Marketing.Application.Business.User.Command
 
             return new JwtSecurityTokenHandler().WriteToken(token);
         }
+
     }
 }
