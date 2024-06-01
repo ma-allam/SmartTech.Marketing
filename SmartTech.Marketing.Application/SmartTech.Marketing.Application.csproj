@@ -24,4 +24,8 @@
     <ProjectReference Include="..\SmartTech.Marketing.Domain\SmartTech.Marketing.Domain.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Business\ContractManagement\Query\" />
+  </ItemGroup>
+
 </Project>

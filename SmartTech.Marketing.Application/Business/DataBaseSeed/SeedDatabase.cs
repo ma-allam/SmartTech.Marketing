@@ -69,8 +69,31 @@ namespace SmartTech.Marketing.Application.Business.DataBaseSeed
             //await _databaseService.Country.AddRangeAsync(countries);
             //await _databaseService.DBSaveChangesAsync();
             #endregion
-            
+            #region Client Type
+            //List<ClientType> ClientTypes = new List<ClientType>
+            //{
+
+            //    new ClientType{Id=1,Type="Military"},
+            //    new ClientType{Id=2,Type="Military"}
+
+
+            //};
+            //await _databaseService.ClientType.AddRangeAsync(ClientTypes);
+            //await _databaseService.DBSaveChangesAsync(cancellationToken);
+            #endregion
+            #region Client Type
+            List<ContractPaymentType> ClientTypes = new List<ContractPaymentType>
+            {
+
+                new ContractPaymentType{Id=1,Type="Cash"},
+                new ContractPaymentType{Id=2,Type="Credit"}
+
+
+            };
+            await _databaseService.ContractPaymentType.AddRangeAsync(ClientTypes);
+            await _databaseService.DBSaveChangesAsync(cancellationToken);
+            #endregion
             return output;
         }
-}
+    }
 }

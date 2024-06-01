@@ -35,4 +35,8 @@
 	  <ProjectReference Include="..\SmartTech.Marketing.Persistence\SmartTech.Marketing.Persistence.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Uploads\" />
+  </ItemGroup>
+
 </Project>
