@@ -8,7 +8,7 @@ namespace SmartTech.Marketing.Core.AppSetting
 {
     public class FilesPathSetting
     {
-        public static string SectionName { get; set; } = "FilesPath";
+        public static string SectionName { get; set; } = "UploadPath";
         public string? Path { get; set; }
     }
 }

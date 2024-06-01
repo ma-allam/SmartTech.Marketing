@@ -1,15 +1,12 @@
-﻿using MediatR;
-using Microsoft.AspNetCore.Http;
+﻿using SmartTech.Marketing.Application.Business.ContractManagement.Command;
 using SmartTech.Marketing.Core.Messages;
 using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
 
-namespace SmartTech.Marketing.Application.Business.ContractManagement.Command
+namespace SmartTech.Marketing.WebApi.EndPoints.ContractManagement.Command
 {
-    public class AddNewContractHandlerInput : BaseRequest, IRequest<AddNewContractHandlerOutput>
+    public class AddNewContractEndPointRequest : BaseRequest
     {
-        public AddNewContractHandlerInput() { }
-        public AddNewContractHandlerInput(Guid correlationId) : base(correlationId) { }
+        public const string Route = "/api/ContractManagement/v{version:apiVersion}/AddNewContract/";
         [Required]
         public string ContractNumber { get; set; } = null!;
 
@@ -40,12 +37,5 @@ namespace SmartTech.Marketing.Application.Business.ContractManagement.Command
         public bool Enabled { get; set; }
 
         public List<AttachmentData> Attachments { get; set; }
-
-    }
-    public class AttachmentData
-    {
-        public IFormFile File { get; set; }
-        public string Description { get; set; }
-        public string Notes { get;  set; }
     }
 }

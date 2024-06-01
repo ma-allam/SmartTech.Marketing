@@ -119,7 +119,6 @@ builder.Services.AddWebApilayerDependencyInjection(builder.Configuration);
 
 var app = builder.Build();
 app.ConfigureExceptionHandler(app.Environment);
-
 // Configure the HTTP request pipeline.
 builder.Services.AddEndpointsApiExplorer();
 
@@ -140,6 +139,7 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
+app.UseStaticFiles();
 
 app.UseCors("CorsPolicy");
 app.UseRouting();
