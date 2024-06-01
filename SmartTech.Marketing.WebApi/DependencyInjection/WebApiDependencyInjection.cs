@@ -13,6 +13,7 @@ namespace SmartTech.Marketing.WebApi.DependencyInjection
     {
         public static void AddWebApilayerDependencyInjection(this IServiceCollection services, IConfiguration configuration)
         {
+            AddInitWebApi(services, configuration);
             AddPreLayers(services, configuration);
             AddDataBase(services);
             AddMapper(services);
@@ -32,6 +33,26 @@ namespace SmartTech.Marketing.WebApi.DependencyInjection
         {
             services.AddDbContext<DatabaseService>(opt => opt.UseNpgsql(SettingsDependancyInjection.PosSettings.ConnectionString!));
             services.AddScoped<IDataBaseService, DatabaseService>();
+        }
+        public static void AddInitWebApi(IServiceCollection services, IConfiguration configuration)
+        {
+            //services.AddControllers(Options =>
+            //{
+            //    Options.Filters.Add(typeof(AuditActionFilter));
+            //});
+            //services.AddEndpointsApiExplorer();
+
+
+
+            services.AddCors(options => options.AddPolicy("CorsPolicy", corsPolicyBuilder =>
+            {
+                corsPolicyBuilder
+                    .AllowAnyHeader()
+                    .AllowAnyMethod()
+                    .SetIsOriginAllowed((host) => true)
+                    .AllowCredentials();
+            }));
+
         }
 
     }

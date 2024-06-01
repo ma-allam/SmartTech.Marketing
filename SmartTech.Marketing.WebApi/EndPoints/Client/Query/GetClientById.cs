@@ -24,7 +24,7 @@ namespace SmartTech.Marketing.WebApi.EndPoints.Client.Query
             _mapper = mapper;
 
         }
-        [Authorize]
+        //[Authorize]
         [ApiVersion("0.0")]
         [HttpGet(GetClientByIdEndPointRequest.Route)]
         [SwaggerOperation(Summary = "GetClientById", Description = "GetClientById ", OperationId = "SmartTech.Marketing.WebApi.EndPoints.Client.Query.GetClientById", Tags = new[] { "SmartTech.Marketing.WebApi.EndPoints.Client.Query" })]

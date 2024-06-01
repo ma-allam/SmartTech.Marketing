@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Mvc.Versioning;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
+using SmartTech.Marketing.Core.Exceptions;
 using SmartTech.Marketing.Domain.Entities;
 using SmartTech.Marketing.Persistence.Context;
 using SmartTech.Marketing.WebApi.DependencyInjection;
@@ -117,6 +118,7 @@ builder.Services.AddWebApilayerDependencyInjection(builder.Configuration);
 
 
 var app = builder.Build();
+app.ConfigureExceptionHandler(app.Environment);
 
 // Configure the HTTP request pipeline.
 builder.Services.AddEndpointsApiExplorer();
@@ -139,6 +141,8 @@ if (app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 
+app.UseCors("CorsPolicy");
+app.UseRouting();
 app.UseAuthentication();
 
 app.UseAuthorization();

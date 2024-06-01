@@ -33,7 +33,7 @@ namespace SmartTech.Marketing.Application.Business.Clients.Command
                     var user = new ApplicationUser
                     {
                         PhoneNumber = request.PhoneNumber,
-                        UserName = request.Username,
+                        UserName = request.UserName,
                         Email = request.Email,
                     };
 
