@@ -1,0 +1,30 @@
+@echo off
+
+rem Prompt for password
+set /p password="Enter marketing user password: "
+
+rem Copying files and folders from "%~dp0" to remote server...
+echo Copying files and folders from "%~dp0" to remote server...
+
+rem Check if the batch file is being executed from within its own folder
+if "%~dpnx0" neq "%CD%\%~nx0" (
+    rem Copy all files and folders except the batch file
+    for %%i in ("%~dp0*") do (
+        if /I not "%%~nxi"=="%~nx0" (
+            rem Include password in SCP command
+            scp -rp "%%i" -P %password% marketing@172.16.30.98:/mnt/externaldrive/DockerVolumes/nextcloud-data/data/admin/files/
+        )
+    )
+    if %errorlevel% neq 0 (
+        echo Error: SCP command failed.
+        pause
+        exit /b %errorlevel%
+    )
+    echo Copying completed.
+)
+
+rem Execute SSH command
+echo Scan Started.
+echo %password% | ssh -tt marketing@172.16.30.98 "sudo -S docker exec -u 33 nextcloud-nextcloud-app-1 php /var/www/html/occ files:scan --all"
+echo Scan Completed.
+pause

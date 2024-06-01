@@ -1,0 +1,4 @@
+scp -rp 31-3-2024-L2.rar marketing@172.16.30.98:/mnt/externaldrive/DockerVolumes/nextcloud-data/data/admin/files/31-3-2024-L2.rar
+
+
+docker exec -u 33 nextcloud-nextcloud-app-1 php /var/www/html/occ files:scan --all
