@@ -24,7 +24,7 @@ namespace SmartTech.Marketing.WebApi.EndPoints.UploadDownloadAttach
             _mapper = mapper;
 
         }
-        //[Authorize]
+        [Authorize]
         [ApiVersion("0.0")]
         [HttpGet(DownloadAttachmentEndPointRequest.Route)]
         [SwaggerOperation(Summary = "DownloadAttachment", Description = "DownloadAttachment ", OperationId = "SmartTech.Marketing.WebApi.EndPoints.UploadDownloadAttach.DownloadAttachment", Tags = new[] { "SmartTech.Marketing.WebApi.EndPoints.UploadDownloadAttach" })]

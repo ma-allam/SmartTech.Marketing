@@ -7,5 +7,6 @@ namespace SmartTech.Marketing.Application.Business.ContractManagement.Command
         public AddNewContractHandlerOutput() { }
         public AddNewContractHandlerOutput(Guid correlationId) : base(correlationId) { }
 
+        public string Message { get;  set; }
     }
 }

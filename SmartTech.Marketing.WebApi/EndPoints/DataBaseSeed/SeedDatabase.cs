@@ -24,7 +24,7 @@ namespace SmartTech.Marketing.WebApi.EndPoints.DataBaseSeed
             _mapper = mapper;
 
         }
-        //[Authorize]
+        [Authorize]
         [ApiVersion("0.0")]
         [HttpPost(SeedDatabaseEndPointRequest.Route)]
         [SwaggerOperation(Summary = "SeedDatabase", Description = "SeedDatabase ", OperationId = "SmartTech.Marketing.WebApi.EndPoints.DataBaseSeed.SeedDatabase", Tags = new[] { "SmartTech.Marketing.WebApi.EndPoints.DataBaseSeed" })]

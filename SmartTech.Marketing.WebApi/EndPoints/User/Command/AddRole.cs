@@ -24,7 +24,7 @@ namespace SmartTech.Marketing.WebApi.EndPoints.User.Command
             _mapper = mapper;
 
         }
-        //[Authorize]
+        [Authorize]
         [ApiVersion("0.0")]
         [HttpPost(AddRoleEndPointRequest.Route)]
         [SwaggerOperation(Summary = "AddRole", Description = "AddRole ", OperationId = "SmartTech.Marketing.WebApi.EndPoints.User.Command.AddRole", Tags = new[] { "SmartTech.Marketing.WebApi.EndPoints.User.Command" })]

@@ -1,4 +1,5 @@
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc.ApiExplorer;
 using Microsoft.AspNetCore.Mvc.Versioning;
@@ -137,12 +138,13 @@ if (app.Environment.IsDevelopment())
         }
     });
 }
-
 app.UseHttpsRedirection();
 app.UseStaticFiles();
 
 app.UseCors("CorsPolicy");
 app.UseRouting();
+app.UseMiddleware<GlobalAuthorizationControlMiddleware>();
+
 app.UseAuthentication();
 
 app.UseAuthorization();
