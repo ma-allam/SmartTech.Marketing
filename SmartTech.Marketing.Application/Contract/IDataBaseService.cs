@@ -63,6 +63,7 @@ namespace SmartTech.Marketing.Application.Contract
         public DbSet<SmsTargetTypeSubCategory> SmsTargetTypeSubCategory { get; set; }
 
         public DbSet<SmsTargets> SmsTargets { get; set; }
+        public DbSet<SysParam> SysParam { get; set; }
         int DBSaveChanges();
         Task<int> DBSaveChangesAsync(CancellationToken cancellationToken = default);
         Task<IDbContextTransaction> BeginTransactionAsync(CancellationToken cancellationToken = default);

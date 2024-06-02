@@ -29,7 +29,11 @@ public partial class Contracts
     public double TotalContractCost { get; set; }
 
     [Column("total_credit")]
-    public int TotalCredit { get; set; }
+    public double TotalCredit { get; set; }
+    [Column("MinSquareArea")]
+    public double MinSquareArea { get; set; }
+    [Column("AcceptableCloudPerc")]
+    public double AcceptableCloudPerc { get; set; }
 
     [Column("currency_id")]
     public int CurrencyId { get; set; }

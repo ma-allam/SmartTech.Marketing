@@ -8,6 +8,7 @@ namespace SmartTech.Marketing.WebApi.EndPoints.ContractManagement.Command
     {
         public AddNewContractEndPointResponse() { }
         public AddNewContractEndPointResponse(Guid correlationId) : base(correlationId) { }
+        public string Message { get; set; }
 
     }
 }

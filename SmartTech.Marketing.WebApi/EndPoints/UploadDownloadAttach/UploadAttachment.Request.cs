@@ -8,6 +8,6 @@ namespace SmartTech.Marketing.WebApi.EndPoints.UploadDownloadAttach
         public const string Route = "/api/UploadDownloadAttach/v{version:apiVersion}/UploadAttachment/";
 
         public int ContractId { get; set; }
-        public List<AttachmentData> Attachments { get; set; }
+        public List<AttachmentInput> Attachments { get; set; }
     }
 }

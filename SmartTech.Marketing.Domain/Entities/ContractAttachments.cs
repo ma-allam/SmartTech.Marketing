@@ -15,12 +15,16 @@ public partial class ContractAttachments
     [Key]
     [Column("id")]
     public int Id { get; set; }
+    [Column("AttachmentId")]
+    public Guid AttachmentId { get; set; }
 
     [Column("name")]
     public string? Name { get; set; }
+    [Column("UploadDate")]
+    public DateOnly UploadDate { get; set; }
 
-    [Column("description")]
-    public string? Description { get; set; }
+    [Column("Tags")]
+    public string? Tags { get; set; }
 
     [Column("file_extension")]
     public string? FileExtension { get; set; }

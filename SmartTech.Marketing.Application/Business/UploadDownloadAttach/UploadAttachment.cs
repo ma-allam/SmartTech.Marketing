@@ -55,25 +55,29 @@ namespace SmartTech.Marketing.Application.Business.UploadDownloadAttach
                             {
                                 throw new WebApiException(WebApiExceptionSource.DynamicMessage, "File size cannot exceed 5MB");
                             }
-
-                            var fileExtension = Path.GetExtension(file.File.FileName);
-                            var fileName = Guid.NewGuid().ToString() + fileExtension;
-                            var filePath = Path.Combine(uploadsPath, fileName);
+                            var FileName = Path.GetFileName(file.File.FileName);
+                            var FileExtension = Path.GetExtension(file.File.FileName);
+                            var FileId= Guid.NewGuid();
+                            var SaveFileName = FileId.ToString() + FileExtension;
+                            var filePath = Path.Combine(uploadsPath, SaveFileName);
 
                             using (var stream = new FileStream(filePath, FileMode.Create))
                             {
                                 await file.File.CopyToAsync(stream);
                             }
 
-                            var fileUrl = $"{httpContext.Request.Scheme}://{httpContext.Request.Host}/{SettingsDependancyInjection.FilesPathSettings.Path}/{fileName}";
+                            var fileUrl = $"{httpContext.Request.Scheme}://{httpContext.Request.Host}/{SettingsDependancyInjection.FilesPathSettings.Path}/{SaveFileName}";
 
                             var fileMetadata = new ContractAttachments
                             {
                                 ContractId = request.ContractId,
-                                Description = file.Description,
-                                Name = fileName,
+                                Tags = file.Tags,
+                                Name = FileName,
+                                AttachmentId=FileId,
+                                FileExtension = FileExtension,
                                 Notes = file.Notes,
-                                FileUrl = fileUrl
+                                FileUrl = fileUrl,
+                                UploadDate= DateOnly.FromDateTime(DateTime.Now)
                             };
 
                             _databaseService.ContractAttachments.Add(fileMetadata);

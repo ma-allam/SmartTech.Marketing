@@ -9,7 +9,7 @@ namespace SmartTech.Marketing.Application.Business.UploadDownloadAttach
         public UploadAttachmentHandlerInput() { }
         public UploadAttachmentHandlerInput(Guid correlationId) : base(correlationId) { }
         public int ContractId { get; set; }
-        public List<AttachmentData> Attachments { get; set; }
+        public List<AttachmentInput> Attachments { get; set; }
 
     }
 }

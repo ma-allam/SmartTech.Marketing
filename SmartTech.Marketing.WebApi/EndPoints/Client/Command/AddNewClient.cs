@@ -25,7 +25,7 @@ namespace SmartTech.Marketing.WebApi.EndPoints.Client.Command
             _mapper = mapper;
 
         }
-        //[Authorize]
+        [Authorize]
         [ApiVersion("0.0")]
         [HttpPost(AddNewClientEndPointRequest.Route)]
         [SwaggerOperation(Summary = "AddNewClient", Description = "AddNewClient ", OperationId = "SmartTech.Marketing.WebApi.EndPoints.Client.Query.Command.AddNewClient", Tags = new[] { "SmartTech.Marketing.WebApi.EndPoints.Client.Query.Command" })]

@@ -35,7 +35,15 @@ namespace SmartTech.Marketing.WebApi.EndPoints.ContractManagement.Command
 
         [Required]
         public bool Enabled { get; set; }
-
-        public List<AttachmentData> Attachments { get; set; }
+        public double AcceptableCloudPerc { get; set; }
+        public double MinSquareArea { get; set; }
+        public List<ContractDueDateInput> ContractDueDates { get; set; }
+        public List<ContractImageModeInput> ContractImageModes { get; set; }
+        public List<ContractImageResolutionInput> ContractImageResolutions { get; set; }
+        public List<ContractOrderPriorityInput> ContractOrderPriorities { get; set; }
+        public List<ContractPaymentInformationInput> ContractPaymentInformation { get; set; }
+        public List<ContractPeriodInput> ContractPeriods { get; set; }
+        public List<ContractServiceInput> ContractServices { get; set; }
+        public List<AttachmentInput> Attachments { get; set; }
     }
 }

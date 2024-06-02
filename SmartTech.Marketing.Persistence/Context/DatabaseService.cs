@@ -81,6 +81,8 @@ public partial class DatabaseService : IdentityDbContext<ApplicationUser>,IDataB
     public virtual DbSet<SmsTargetTypeSubCategory> SmsTargetTypeSubCategory { get; set; }
 
     public virtual DbSet<SmsTargets> SmsTargets { get; set; }
+    public DbSet<SysParam> SysParam { get; set; }
+
 
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)

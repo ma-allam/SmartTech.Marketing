@@ -24,7 +24,7 @@ namespace SmartTech.Marketing.WebApi.EndPoints.ContractManagement.Command
             _mapper = mapper;
 
         }
-        //[Authorize]
+        [Authorize]
         [ApiVersion("0.0")]
         [HttpPost(AddNewContractEndPointRequest.Route)]
         [SwaggerOperation(Summary = "AddNewContract", Description = "AddNewContract ", OperationId = "SmartTech.Marketing.WebApi.EndPoints.ContractManagement.Command.AddNewContract", Tags = new[] { "SmartTech.Marketing.WebApi.EndPoints.ContractManagement.Command" })]

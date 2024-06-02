@@ -25,7 +25,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Business\ContractManagement\Query\" />
+    <Folder Include="Business\SystemDeveloper\" />
   </ItemGroup>
 
 </Project>
