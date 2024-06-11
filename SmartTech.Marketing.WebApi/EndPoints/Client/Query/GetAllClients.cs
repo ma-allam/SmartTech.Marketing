@@ -4,9 +4,7 @@ using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using SmartTech.Marketing.Application.Business.Clients.Query;
-using SmartTech.Marketing.Application.Business.ContractManagement.Query;
 using SmartTech.Marketing.Core.Exceptions;
-using SmartTech.Marketing.WebApi.EndPoints.ContractManagement.Query;
 using Swashbuckle.AspNetCore.Annotations;
 using System.Net;
 
@@ -34,7 +32,7 @@ namespace SmartTech.Marketing.WebApi.EndPoints.Client.Query
         [SwaggerResponse((int)HttpStatusCode.BadRequest, Type = typeof(ExceptionOutput))]
         public override async Task<ActionResult<GetAllClientsEndPointResponse>> HandleAsync( CancellationToken cancellationToken = default)
         {
-            _logger.LogInformation("Starting GetAllContracts handling");
+            _logger.LogInformation("Starting GetAllClients handling");
             var result = await _mediator.Send(new GetAllClientsHandlerInput(), cancellationToken);
             return Ok(_mapper.Map<GetAllClientsEndPointResponse>(result));
         }

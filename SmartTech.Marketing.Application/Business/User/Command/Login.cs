@@ -25,8 +25,10 @@ namespace SmartTech.Marketing.Application.Business.User.Command
         private readonly SignInManager<ApplicationUser> _signInManager;
         private readonly IConfiguration _configuration;
         private readonly IHttpContextAccessor _httpContextAccessor;
+        private readonly IJwtHandler _jwtHandler;
 
-        public LoginHandler(ILogger<LoginHandler> logger, IDataBaseService databaseService, UserManager<ApplicationUser> userManager, SignInManager<ApplicationUser> signInManager, IConfiguration configuration, IHttpContextAccessor httpContextAccessor)
+
+        public LoginHandler(ILogger<LoginHandler> logger, IDataBaseService databaseService, UserManager<ApplicationUser> userManager, SignInManager<ApplicationUser> signInManager, IConfiguration configuration, IHttpContextAccessor httpContextAccessor, IJwtHandler jwtHandler)
         {
             _logger = logger;
             _databaseService = databaseService;
@@ -34,6 +36,7 @@ namespace SmartTech.Marketing.Application.Business.User.Command
             _signInManager = signInManager;
             _configuration = configuration;
             _httpContextAccessor = httpContextAccessor;
+            _jwtHandler = jwtHandler;
         }
 
         public async Task<LoginHandlerOutput> Handle(LoginHandlerInput request, CancellationToken cancellationToken)
@@ -49,8 +52,13 @@ namespace SmartTech.Marketing.Application.Business.User.Command
 
             if (result.Succeeded)
             {
-                var token = await GenerateJwtToken(user);
-                output.Token = token;
+                var client = await _databaseService.Client.Where(o => o.UserId == user.Id).FirstOrDefaultAsync();
+
+                ActiveContext activeContext = new ActiveContext { UserName = user.UserName, ClientId = client.Id,EmailAddress=user.Email,FullName=client.Name };
+                var token = _jwtHandler.CreateWithRefreshToken(activeContext);
+
+                //var token = await GenerateJwtToken(user);
+                output.Context = token;
 
                 // Save login history
                 var loginTime = DateTime.UtcNow.ToString("o");
@@ -92,11 +100,11 @@ namespace SmartTech.Marketing.Application.Business.User.Command
             var roleClaims = roles.Select(role => new Claim(ClaimTypes.Role, role)).ToList();
 
             var claims = new List<Claim>
-    {
-        new Claim(JwtRegisteredClaimNames.Sub, user.UserName),
-        new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
-        new Claim(JWTClaims.ActiveContext, data)
-    }.Union(roleClaims);
+                                        {
+                                            new Claim(JwtRegisteredClaimNames.Sub, user.UserName),
+                                            new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
+                                            new Claim(JWTClaims.ActiveContext, data)
+                                        }.Union(roleClaims);
 
             var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration["Jwt:Key"]));
             var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);

@@ -36,7 +36,9 @@ namespace SmartTech.Marketing.WebApi.Swagger
         {
             var apiAssembly = Assembly.GetEntryAssembly();
             string apiName = apiAssembly?.FullName?.Split(',')[0] ?? "";
-            var apiNameReplaced = apiName!.Replace("Template.CleanArchitecture.", "")!.Replace(".WebApi", "");
+            var apiNameReplaced = apiName!.Replace(".WebApi", "");
+
+            //var apiNameReplaced = apiName!.Replace("SmartTech.Marketing.", "")!.Replace(".WebApi", "");
 
 
             var info = new OpenApiInfo()

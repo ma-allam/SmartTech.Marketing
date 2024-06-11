@@ -5,7 +5,6 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using SmartTech.Marketing.Application.Business.Clients.Command;
 using SmartTech.Marketing.Core.Exceptions;
-using SmartTech.Marketing.WebApi.EndPoints.Client.Query.Command;
 using Swashbuckle.AspNetCore.Annotations;
 using System.Net;
 

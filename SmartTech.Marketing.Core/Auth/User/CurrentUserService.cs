@@ -39,7 +39,7 @@ namespace SmartTech.Marketing.Core.Auth.User
             }
 
             var data = _contextAccessor.HttpContext?.User.GetClaim<string>(JWTClaims.ActiveContext);
-            ActiveContext aContext = JsonConvert.DeserializeObject<ActiveContext>(data.ToString(), new JsonSerializerSettings()
+            ActiveContext? aContext = JsonConvert.DeserializeObject<ActiveContext>(data.ToString(), new JsonSerializerSettings()
             {
                 ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
                 Converters = new List<JsonConverter> { new TruncateDecimalConverter(0) } // Truncate to 0 decimal places
