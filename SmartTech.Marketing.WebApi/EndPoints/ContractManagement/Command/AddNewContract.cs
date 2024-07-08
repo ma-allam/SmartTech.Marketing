@@ -30,7 +30,7 @@ namespace SmartTech.Marketing.WebApi.EndPoints.ContractManagement.Command
         [SwaggerOperation(Summary = "AddNewContract", Description = "AddNewContract ", OperationId = "SmartTech.Marketing.WebApi.EndPoints.ContractManagement.Command.AddNewContract", Tags = new[] { "SmartTech.Marketing.WebApi.EndPoints.ContractManagement.Command" })]
         [SwaggerResponse((int)HttpStatusCode.OK, Type = typeof(AddNewContractEndPointResponse))]
         [SwaggerResponse((int)HttpStatusCode.BadRequest, Type = typeof(ExceptionOutput))]
-        public override async Task<ActionResult<AddNewContractEndPointResponse>> HandleAsync([FromForm]AddNewContractEndPointRequest request, CancellationToken cancellationToken = default)
+        public override async Task<ActionResult<AddNewContractEndPointResponse>> HandleAsync([FromBody]AddNewContractEndPointRequest request, CancellationToken cancellationToken = default)
         {
             _logger.LogInformation("Information : Starting AddNewContract handling");
             var Appinput = _mapper.Map<AddNewContractHandlerInput>(request);

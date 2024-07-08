@@ -4,6 +4,7 @@ using Microsoft.Extensions.Logging;
 using NetTopologySuite.Geometries;
 using SmartTech.Marketing.Application.Contract;
 using SmartTech.Marketing.Domain.Entities;
+using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace SmartTech.Marketing.Application.Business.DataBaseSeed
 {
@@ -21,7 +22,7 @@ namespace SmartTech.Marketing.Application.Business.DataBaseSeed
             _logger.LogInformation("Handling SeedDatabase business logic");
             SeedDatabaseHandlerOutput output = new SeedDatabaseHandlerOutput(request.CorrelationId());
             #region Country Seed seed
-            _databaseService.Country.ExecuteDeleteAsync();
+            await _databaseService.Country.ExecuteDeleteAsync(cancellationToken);
 
             List<Country> countries = new List<Country>
             {
@@ -71,7 +72,7 @@ namespace SmartTech.Marketing.Application.Business.DataBaseSeed
             await _databaseService.DBSaveChangesAsync();
             #endregion
             #region Client Type seed
-            _databaseService.ClientType.ExecuteDeleteAsync();
+            await _databaseService.ClientType.ExecuteDeleteAsync(cancellationToken);
 
             List<ClientType> ClientTypes = new List<ClientType>
             {
@@ -85,7 +86,7 @@ namespace SmartTech.Marketing.Application.Business.DataBaseSeed
             await _databaseService.DBSaveChangesAsync(cancellationToken);
             #endregion
             #region Payment Type seed
-            _databaseService.ContractPaymentType.ExecuteDeleteAsync();
+            await _databaseService.ContractPaymentType.ExecuteDeleteAsync(cancellationToken);
 
             List<ContractPaymentType> CcntractPaymentType = new List<ContractPaymentType>
             {
@@ -98,8 +99,25 @@ namespace SmartTech.Marketing.Application.Business.DataBaseSeed
             await _databaseService.ContractPaymentType.AddRangeAsync(CcntractPaymentType);
             await _databaseService.DBSaveChangesAsync(cancellationToken);
             #endregion
+            #region Currency Type Seed
+            await _databaseService.Currency.ExecuteDeleteAsync(cancellationToken);
+            _databaseService.Currency.AddRange(
+                new Currency { Id = 1, CurrencyName = "EGP" },
+                new Currency { Id = 2, CurrencyName = "USD" },
+                new Currency { Id = 3, CurrencyName = "EUR" },
+                new Currency { Id = 4, CurrencyName = "CNY" });
+            await _databaseService.DBSaveChangesAsync(cancellationToken);
+            #endregion
+            #region Contract Image Type Seed
+            await _databaseService.ContractImageType.ExecuteDeleteAsync(cancellationToken);
+            _databaseService.ContractImageType.AddRange(
+                new ContractImageType { Id = 1, Name = "PAN" },
+                new ContractImageType { Id = 2, Name = "Multi" }
+                );
+            await _databaseService.DBSaveChangesAsync(cancellationToken);
+            #endregion
             #region System Parameters Seed
-            _databaseService.SysParam.ExecuteDeleteAsync();
+            await _databaseService.SysParam.ExecuteDeleteAsync(cancellationToken);
             _databaseService.SysParam.Add(new SysParam { Id=1, ParamName= "IsAuthorizationRequired",ParamValue=true });
            await _databaseService.DBSaveChangesAsync(cancellationToken);
             #endregion

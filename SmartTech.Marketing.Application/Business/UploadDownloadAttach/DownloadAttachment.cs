@@ -23,14 +23,14 @@ namespace SmartTech.Marketing.Application.Business.UploadDownloadAttach
         {
             _logger.LogInformation("Handling DownloadAttachment business logic");
             DownloadAttachmentHandlerOutput output = new DownloadAttachmentHandlerOutput(request.CorrelationId());
-            var attachment = await _databaseService.ContractAttachments.Where(o => o.Name.StartsWith(request.AttachmentId.ToString())).FirstOrDefaultAsync(); ;
+            var attachment = await _databaseService.ContractAttachments.Where(o => o.AttachmentId==request.AttachmentId).FirstOrDefaultAsync(); ;
             if (attachment == null)
             {
                 _logger.LogError($"File with ID {request.AttachmentId} not found.");
                 throw new WebApiException("File not found.");
             }
 
-            var filePath = Path.Combine(_environment.WebRootPath, "uploads", attachment.Name);
+            var filePath = Path.Combine(_environment.WebRootPath, "uploads", attachment.AttachmentId.ToString()+attachment.FileExtension);
             if (!File.Exists(filePath))
             {
                 _logger.LogError($"File not found on disk: {filePath}");

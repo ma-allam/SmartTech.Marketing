@@ -1,0 +1,38 @@
+[Normal] From: RSM@srv-san2.figs.local ""  Time: 25/05/2024 18:54:15
+        Restore session 2024/05/25-27 started.
+
+[Major] From: RSM@srv-san2.figs.local ""  Time: 25/05/2024 18:54:15
+        Restore of object ftpin.figs.local:/E named "FS"
+        may be incomplete because some medium is missing.
+
+[Normal] From: RMA@srv-san2.figs.local "DRV2"  Time: 25/05/2024 18:54:16
+        STARTING Media Agent "DRV2"
+
+[Normal] From: RMA@srv-san2.figs.local "DRV2"  Time: 25/05/2024 18:54:21
+        => UMA@dpfc.figs.local@Changer0:2:0:3:1
+        Loading medium from slot 9 to device Tape2:2:0:2:0
+
+[Warning] From: RMA@srv-san2.figs.local "DRV2"  Time: 25/05/2024 18:55:00
+        The device "DRV2" could not be opened("Device could not be accessed")
+
+[Normal] From: RMA@srv-san2.figs.local "DRV2"  Time: 25/05/2024 18:55:00
+        Starting the device path discovery process.
+
+[Normal] From: RMA@srv-san2.figs.local "DRV2"  Time: 25/05/2024 18:55:03
+        A new path(s) "Tape1:2:0:2:0" found for device "DRV2" and stored.
+
+[Normal] From: RMA@srv-san2.figs.local "DRV2"  Time: 25/05/2024 18:55:03
+        Device path discovery process finished.
+
+[Normal] From: VRDA@srv-san2.figs.local "FS"  Time: 25/05/2024 18:55:45
+        STARTING Disk Agent for dpfc.figs.local:E:
+
+[Normal] From: VRDA@srv-san2.figs.local "FS"  Time: 25/05/2024 18:56:36
+        COMPLETED Disk Agent for dpfc.figs.local:E:
+
+[Normal] From: RMA@srv-san2.figs.local "DRV2"  Time: 25/05/2024 18:57:54
+        Ejecting medium '9'.
+
+[Normal] From: RMA@srv-san2.figs.local "DRV2"  Time: 25/05/2024 18:57:54
+        => UMA@dpfc.figs.local@Changer0:2:0:3:1
+        Unloading medium to slot 9 from device Tape1:2:0:2:0

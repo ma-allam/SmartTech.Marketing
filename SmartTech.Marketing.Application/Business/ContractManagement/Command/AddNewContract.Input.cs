@@ -1,6 +1,7 @@
 ﻿using MediatR;
 using Microsoft.AspNetCore.Http;
 using SmartTech.Marketing.Core.Messages;
+using Swashbuckle.AspNetCore.Annotations;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
@@ -47,7 +48,7 @@ namespace SmartTech.Marketing.Application.Business.ContractManagement.Command
         public List<ContractPaymentInformationInput> ContractPaymentInformation { get; set; }
         public List<ContractPeriodInput> ContractPeriods { get; set; }
         public List<ContractServiceInput> ContractServices { get; set; }
-        public List<AttachmentInput> Attachments { get; set; }
+        //public List<AttachmentInput> Attachments { get; set; }
         
     }
     public class ContractDueDateInput
