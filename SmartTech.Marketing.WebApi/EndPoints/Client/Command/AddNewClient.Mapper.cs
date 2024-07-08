@@ -2,7 +2,7 @@
 using AutoMapper;
 using SmartTech.Marketing.Application.Business.Clients.Command;
 
-namespace SmartTech.Marketing.WebApi.EndPoints.Client.Query.Command
+namespace SmartTech.Marketing.WebApi.EndPoints.Client.Command
 {
     public class AddNewClientMapper : Profile
     {

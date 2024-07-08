@@ -1,7 +1,7 @@
 ﻿using SmartTech.Marketing.Core.Messages;
 using System.ComponentModel.DataAnnotations;
 
-namespace SmartTech.Marketing.WebApi.EndPoints.Client.Query.Command
+namespace SmartTech.Marketing.WebApi.EndPoints.Client.Command
 {
     public class AddNewClientEndPointRequest : BaseRequest
     {

@@ -1,4 +1,5 @@
-﻿using SmartTech.Marketing.Core.Messages;
+﻿using SmartTech.Marketing.Core.Auth.JWT;
+using SmartTech.Marketing.Core.Messages;
 
 namespace SmartTech.Marketing.Application.Business.User.Command
 {
@@ -6,7 +7,7 @@ namespace SmartTech.Marketing.Application.Business.User.Command
     {
         public RegisterHandlerOutput() { }
         public RegisterHandlerOutput(Guid correlationId) : base(correlationId) { }
-        public string Token { get; set; }
+        public TokenContext Context { get; set; }
 
     }
 }

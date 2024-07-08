@@ -1,8 +1,6 @@
-﻿
+﻿using SmartTech.Marketing.Core.Messages;
 
-using SmartTech.Marketing.Core.Messages;
-
-namespace SmartTech.Marketing.WebApi.EndPoints.Client.Query.Command
+namespace SmartTech.Marketing.WebApi.EndPoints.Client.Command
 {
     public class AddNewClientEndPointResponse : BaseResponse
     {

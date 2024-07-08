@@ -1,10 +1,13 @@
 ﻿using MediatR;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 using Microsoft.IdentityModel.Tokens;
 using SmartTech.Marketing.Application.Contract;
+using SmartTech.Marketing.Core.Auth.JWT;
+using SmartTech.Marketing.Core.Auth.User;
 using SmartTech.Marketing.Domain.Entities;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
@@ -19,14 +22,22 @@ namespace SmartTech.Marketing.Application.Business.User.Command
         private readonly UserManager<ApplicationUser> _userManager;
         private readonly SignInManager<ApplicationUser> _signInManager;
         private readonly IConfiguration _configuration;
+        private readonly IHttpContextAccessor _httpContextAccessor;
 
-        public RegisterHandler(ILogger<LoginHandler> logger, IDataBaseService databaseService, UserManager<ApplicationUser> userManager, SignInManager<ApplicationUser> signInManager, IConfiguration configuration)
+        private readonly IJwtHandler _jwtHandler;
+
+
+        public RegisterHandler(ILogger<LoginHandler> logger, IDataBaseService databaseService, UserManager<ApplicationUser> userManager, SignInManager<ApplicationUser> signInManager, IConfiguration configuration, IHttpContextAccessor httpContextAccessor, IJwtHandler jwtHandler)
         {
             _logger = logger;
             _databaseService = databaseService;
             _userManager = userManager;
             _signInManager = signInManager;
             _configuration = configuration;
+            _jwtHandler = jwtHandler;
+            _httpContextAccessor = httpContextAccessor;
+
+
         }
 
         public async Task<RegisterHandlerOutput> Handle(RegisterHandlerInput request, CancellationToken cancellationToken)
@@ -67,8 +78,26 @@ namespace SmartTech.Marketing.Application.Business.User.Command
 
                     // Optionally, sign in the user after registration
                     await _signInManager.SignInAsync(user, isPersistent: false);
-                    var token = GenerateJwtToken(user);
-                    output.Token = token;
+
+                    ActiveContext activeContext = new ActiveContext { UserName = user.UserName, ClientId = client.Id, EmailAddress = user.Email, FullName = client.Name };
+                    var token = _jwtHandler.CreateWithRefreshToken(activeContext);
+
+                    //var token = await GenerateJwtToken(user);
+                    output.Context = token;
+
+                    // Save login history
+                    var loginTime = DateTime.UtcNow.ToString("o");
+                    var ipAddress = _httpContextAccessor.HttpContext.Connection.RemoteIpAddress?.ToString();
+
+                    var loginToken = new IdentityUserToken<string>
+                    {
+                        UserId = user.Id,
+                        LoginProvider = "LoginTracker",
+                        Name = "LoginEvent",
+                        Value = $"{loginTime};{ipAddress}"
+                    };
+
+                    await _userManager.SetAuthenticationTokenAsync(user, loginToken.LoginProvider, loginToken.Name, loginToken.Value);
                 }
                 catch (Exception ex)
                 {
