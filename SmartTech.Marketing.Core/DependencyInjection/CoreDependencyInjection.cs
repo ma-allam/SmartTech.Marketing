@@ -17,6 +17,7 @@ namespace SmartTech.Marketing.Core.DependencyInjection
         {
             services.AddSettingsDependancyInjection(configuration);
             services.AddScoped<ICurrentUserService, CurrentUserService>();
+            services.AddSwagger();
 
             return services;
         }
