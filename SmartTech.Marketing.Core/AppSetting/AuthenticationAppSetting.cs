@@ -38,6 +38,7 @@ namespace SmartTech.Marketing.Core.AppSetting
         public int expiryMinutes { get; set; }
         public int RefreshExpiryMinutes { get; set; }
         public string issuer { get; set; }
+
         public bool Enable { get; set; }
     }
 
