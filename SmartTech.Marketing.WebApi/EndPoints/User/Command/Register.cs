@@ -26,7 +26,7 @@ namespace SmartTech.Marketing.WebApi.EndPoints.User.Command
         //[Authorize]
         [ApiVersion("0.0")]
         [HttpPost(RegisterEndPointRequest.Route)]
-        [SwaggerOperation(Summary = "Register", Description = "Register ", OperationId = "SmartTech.Marketing.WebApi.EndPoints.User.Command.Register", Tags = new[] { "SmartTech.Marketing.WebApi.EndPoints.User.Command" })]
+        [SwaggerOperation(Summary = "Register", Description = "Register ", OperationId = "SmartTech.Marketing.WebApi.EndPoints.User.Command.Register", Tags = new[] { "SmartTech.Marketing.WebApi.EndPoints.User" })]
         [SwaggerResponse((int)HttpStatusCode.OK, Type = typeof(RegisterEndPointResponse))]
         //[SwaggerResponse((int)HttpStatusCode.BadRequest, Type = typeof(ExceptionOutput))]
         public override async Task<ActionResult<RegisterEndPointResponse>> HandleAsync([FromBody] RegisterEndPointRequest request, CancellationToken cancellationToken = default)

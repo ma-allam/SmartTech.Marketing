@@ -26,7 +26,7 @@ namespace SmartTech.Marketing.WebApi.EndPoints.User.Command
         //[Authorize]
         [ApiVersion("0.0")]
         [HttpPost(LoginEndPointRequest.Route)]
-        [SwaggerOperation(Summary = "Login", Description = "Login ", OperationId = "SmartTech.Marketing.WebApi.EndPoints.User.Command.Login", Tags = new[] { "SmartTech.Marketing.WebApi.EndPoints.User.Command" })]
+        [SwaggerOperation(Summary = "Login", Description = "Login ", OperationId = "SmartTech.Marketing.WebApi.EndPoints.User.Command.Login", Tags = new[] { "SmartTech.Marketing.WebApi.EndPoints.User" })]
         [SwaggerResponse((int)HttpStatusCode.OK, Type = typeof(LoginEndPointResponse))]
         //[SwaggerResponse((int)HttpStatusCode.BadRequest, Type = typeof(ExceptionOutput))]
         public override async Task<ActionResult<LoginEndPointResponse>> HandleAsync([FromBody] LoginEndPointRequest request, CancellationToken cancellationToken = default)

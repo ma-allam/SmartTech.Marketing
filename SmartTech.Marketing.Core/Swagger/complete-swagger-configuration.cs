@@ -8,6 +8,7 @@ using System.Reflection;
 using System.Text.RegularExpressions;
 
 using Microsoft.OpenApi.Any;
+using Microsoft.AspNetCore.Http;
 
 /// <summary>
 /// Extension methods for configuring Swagger in the application.
@@ -131,7 +132,7 @@ public class ConfigureSwaggerOptions : IConfigureOptions<SwaggerGenOptions>
         {
             options.SwaggerDoc(description.GroupName, CreateInfoForApiVersion(description));
         }
-
+        options.OrderActionsBy(apiDesc => $"{SortMethods(apiDesc.HttpMethod)}{apiDesc.RelativePath}");
         // Add the custom schema ID selector here as well to ensure consistency
         options.CustomSchemaIds(x => SwaggerServiceExtensions.CustomSchemaIdSelector(x));
     }
@@ -162,6 +163,15 @@ public class ConfigureSwaggerOptions : IConfigureOptions<SwaggerGenOptions>
         }
 
         return info;
+    }
+    private static string SortMethods(string httpMethod)
+    {
+        return httpMethod switch
+        {
+            "GET" => "1",
+            "POST" => "2",
+            _ => "3"
+        };
     }
 }
 
@@ -208,6 +218,43 @@ public class SwaggerDefaultValues : IOperationFilter
 
             // Mark the parameter as required if necessary
             parameter.Required |= description.IsRequired;
+        }
+    }
+}
+public class FileUploadOperationFilter : IOperationFilter
+{
+    public void Apply(OpenApiOperation operation, OperationFilterContext context)
+    {
+        var fileParameters = context.MethodInfo.GetParameters().Where(p => p.ParameterType == typeof(List<IFormFile>));
+        if (fileParameters.Any())
+        {
+            operation.Parameters.Clear();
+
+            operation.RequestBody = new OpenApiRequestBody
+            {
+                Content = new Dictionary<string, OpenApiMediaType>
+                {
+                    ["multipart/form-data"] = new OpenApiMediaType
+                    {
+                        Schema = new OpenApiSchema
+                        {
+                            Type = "object",
+                            Properties = new Dictionary<string, OpenApiSchema>
+                            {
+                                ["files"] = new OpenApiSchema
+                                {
+                                    Type = "array",
+                                    Items = new OpenApiSchema
+                                    {
+                                        Type = "string",
+                                        Format = "binary"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            };
         }
     }
 }

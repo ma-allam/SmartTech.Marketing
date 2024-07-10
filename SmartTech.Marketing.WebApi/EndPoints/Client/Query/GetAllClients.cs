@@ -27,7 +27,7 @@ namespace SmartTech.Marketing.WebApi.EndPoints.Client.Query
         [Authorize]
         [ApiVersion("0.0")]
         [HttpGet(GetAllClientsEndPointRequest.Route)]
-        [SwaggerOperation(Summary = "GetAllClients", Description = "GetAllClients ", OperationId = "SmartTech.Marketing.WebApi.EndPoints.Client.Query.GetAllClients", Tags = new[] { "SmartTech.Marketing.WebApi.EndPoints.Client.Query" })]
+        [SwaggerOperation(Summary = "GetAllClients", Description = "GetAllClients ", OperationId = "SmartTech.Marketing.WebApi.EndPoints.Client.Query.GetAllClients", Tags = new[] { "SmartTech.Marketing.WebApi.EndPoints.Client" })]
         [SwaggerResponse((int)HttpStatusCode.OK, Type = typeof(GetAllClientsEndPointResponse))]
         [SwaggerResponse((int)HttpStatusCode.BadRequest, Type = typeof(ExceptionOutput))]
         public override async Task<ActionResult<GetAllClientsEndPointResponse>> HandleAsync( CancellationToken cancellationToken = default)

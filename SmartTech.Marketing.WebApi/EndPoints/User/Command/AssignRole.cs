@@ -27,7 +27,7 @@ namespace SmartTech.Marketing.WebApi.EndPoints.User.Command
         [Authorize]
         [ApiVersion("0.0")]
         [HttpPost(AssignRoleEndPointRequest.Route)]
-        [SwaggerOperation(Summary = "AssignRole", Description = "AssignRole ", OperationId = "SmartTech.Marketing.WebApi.EndPoints.User.Command.AssignRole", Tags = new[] { "SmartTech.Marketing.WebApi.EndPoints.User.Command" })]
+        [SwaggerOperation(Summary = "AssignRole", Description = "AssignRole ", OperationId = "SmartTech.Marketing.WebApi.EndPoints.User.Command.AssignRole", Tags = new[] { "SmartTech.Marketing.WebApi.EndPoints.User" })]
         [SwaggerResponse((int)HttpStatusCode.OK, Type = typeof(AssignRoleEndPointResponse))]
         [SwaggerResponse((int)HttpStatusCode.BadRequest, Type = typeof(ExceptionOutput))]
         public override async Task<ActionResult<AssignRoleEndPointResponse>> HandleAsync([FromBody]AssignRoleEndPointRequest request, CancellationToken cancellationToken = default)

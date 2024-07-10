@@ -27,7 +27,7 @@ namespace SmartTech.Marketing.WebApi.EndPoints.User.Command
         [Authorize]
         [ApiVersion("0.0")]
         [HttpPost(RefreshTokenEndPointRequest.Route)]
-        [SwaggerOperation(Summary = "RefreshToken", Description = "RefreshToken ", OperationId = "SmartTech.Marketing.WebApi.EndPoints.User.Command.RefreshToken", Tags = new[] { "SmartTech.Marketing.WebApi.EndPoints.User.Command" })]
+        [SwaggerOperation(Summary = "RefreshToken", Description = "RefreshToken ", OperationId = "SmartTech.Marketing.WebApi.EndPoints.User.Command.RefreshToken", Tags = new[] { "SmartTech.Marketing.WebApi.EndPoints.User" })]
         [SwaggerResponse((int)HttpStatusCode.OK, Type = typeof(RefreshTokenEndPointResponse))]
         [SwaggerResponse((int)HttpStatusCode.BadRequest, Type = typeof(ExceptionOutput))]
         public override async Task<ActionResult<RefreshTokenEndPointResponse>> HandleAsync([FromBody]RefreshTokenEndPointRequest request, CancellationToken cancellationToken = default)

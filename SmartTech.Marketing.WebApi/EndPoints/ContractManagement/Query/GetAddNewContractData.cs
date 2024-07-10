@@ -27,7 +27,7 @@ namespace SmartTech.Marketing.WebApi.EndPoints.ContractManagement.Query
         [Authorize]
         [ApiVersion("0.0")]
         [HttpGet(GetAddNewContractDataEndPointRequest.Route)]
-        [SwaggerOperation(Summary = "GetAddNewContractData", Description = "GetAddNewContractData ", OperationId = "SmartTech.Marketing.WebApi.EndPoints.ContractManagement.Query.GetAddNewContractData", Tags = new[] { "SmartTech.Marketing.WebApi.EndPoints.ContractManagement.Query" })]
+        [SwaggerOperation(Summary = "GetAddNewContractData", Description = "GetAddNewContractData ", OperationId = "SmartTech.Marketing.WebApi.EndPoints.ContractManagement.Query.GetAddNewContractData", Tags = new[] { "SmartTech.Marketing.WebApi.EndPoints.ContractManagement" })]
         [SwaggerResponse((int)HttpStatusCode.OK, Type = typeof(GetAddNewContractDataEndPointResponse))]
         [SwaggerResponse((int)HttpStatusCode.BadRequest, Type = typeof(ExceptionOutput))]
         public override async Task<ActionResult<GetAddNewContractDataEndPointResponse>> HandleAsync([FromQuery]GetAddNewContractDataEndPointRequest request, CancellationToken cancellationToken = default)

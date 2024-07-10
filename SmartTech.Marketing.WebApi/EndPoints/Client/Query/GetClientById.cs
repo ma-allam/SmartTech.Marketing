@@ -27,7 +27,7 @@ namespace SmartTech.Marketing.WebApi.EndPoints.Client.Query
         [Authorize]
         [ApiVersion("0.0")]
         [HttpGet(GetClientByIdEndPointRequest.Route)]
-        [SwaggerOperation(Summary = "GetClientById", Description = "GetClientById ", OperationId = "SmartTech.Marketing.WebApi.EndPoints.Client.Query.GetClientById", Tags = new[] { "SmartTech.Marketing.WebApi.EndPoints.Client.Query" })]
+        [SwaggerOperation(Summary = "GetClientById", Description = "GetClientById ", OperationId = "SmartTech.Marketing.WebApi.EndPoints.Client.Query.GetClientById", Tags = new[] { "SmartTech.Marketing.WebApi.EndPoints.Client" })]
         [SwaggerResponse((int)HttpStatusCode.OK, Type = typeof(GetClientByIdEndPointResponse))]
         [SwaggerResponse((int)HttpStatusCode.BadRequest, Type = typeof(ExceptionOutput))]
         public override async Task<ActionResult<GetClientByIdEndPointResponse>> HandleAsync([FromQuery]GetClientByIdEndPointRequest request, CancellationToken cancellationToken = default)

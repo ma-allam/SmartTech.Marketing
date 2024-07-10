@@ -51,19 +51,19 @@ namespace SmartTech.Marketing.Application.Business.UploadDownloadAttach
                     {
                         try
                         {
-                            if (file.File.Length > 5 * 1024 * 1024) // 5MB
+                            if (file.Length > 5 * 1024 * 1024) // 5MB
                             {
                                 throw new WebApiException(WebApiExceptionSource.DynamicMessage, "File size cannot exceed 5MB");
                             }
-                            var FileName = Path.GetFileName(file.File.FileName);
-                            var FileExtension = Path.GetExtension(file.File.FileName);
+                            var FileName = Path.GetFileName(file.FileName);
+                            var FileExtension = Path.GetExtension(file.FileName);
                             var FileId= Guid.NewGuid();
                             var SaveFileName = FileId.ToString() + FileExtension;
                             var filePath = Path.Combine(uploadsPath, SaveFileName);
 
                             using (var stream = new FileStream(filePath, FileMode.Create))
                             {
-                                await file.File.CopyToAsync(stream);
+                                await file.CopyToAsync(stream);
                             }
 
                             var fileUrl = $"{httpContext.Request.Scheme}://{httpContext.Request.Host}/{SettingsDependancyInjection.FilesPathSettings.Path}/{SaveFileName}";
@@ -71,11 +71,11 @@ namespace SmartTech.Marketing.Application.Business.UploadDownloadAttach
                             var fileMetadata = new ContractAttachments
                             {
                                 ContractId = request.ContractId,
-                                Tags = file.Tags,
+                                Tags = request.Tags,
                                 Name = FileName,
                                 AttachmentId=FileId,
                                 FileExtension = FileExtension,
-                                Notes = file.Notes,
+                                Notes = request.Notes,
                                 FileUrl = fileUrl,
                                 UploadDate= DateOnly.FromDateTime(DateTime.Now)
                             };
@@ -84,8 +84,8 @@ namespace SmartTech.Marketing.Application.Business.UploadDownloadAttach
                         }
                         catch (Exception ex)
                         {
-                            _logger.LogError(ex, $"Error uploading file: {file.File.FileName}");
-                            throw new WebApiException(WebApiExceptionSource.DynamicMessage, $"Error uploading file: {file.File.FileName}", ex);
+                            _logger.LogError(ex, $"Error uploading file: {file.FileName}");
+                            throw new WebApiException(WebApiExceptionSource.DynamicMessage, $"Error uploading file: {file.FileName}", ex);
                         }
                     }
 
