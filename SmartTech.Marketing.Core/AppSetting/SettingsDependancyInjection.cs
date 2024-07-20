@@ -15,6 +15,8 @@ namespace SmartTech.Marketing.Core.AppSetting
         public static FilesPathSetting FilesPathSettings { get; } = new();
         public static AuthenticationAppSetting AuthenticationSettings { get; } = new();
         public static EncryptionAppSetting EncryptionSetting { get; } = new();
+        public static RedisAppSetting RedisSettings { get; } = new();
+        public static ServiceAppSettings ServiceSettings { get; } = new();
 
 
 
@@ -30,6 +32,10 @@ namespace SmartTech.Marketing.Core.AppSetting
             authenticationSection.Bind(AuthenticationSettings);
             var encryptionSection = configuration.GetSection(EncryptionAppSetting.SectionName);
             encryptionSection.Bind(EncryptionSetting);
+            var redisSection = configuration.GetSection(RedisAppSetting.SectionName);
+            redisSection.Bind(RedisSettings);
+            var serviceSection = configuration.GetSection(ServiceAppSettings.SectionName);
+            serviceSection.Bind(ServiceSettings);
         }
         public static void AddSettingsDependancyInjection(this IServiceCollection services, IConfiguration configuration)
         {
@@ -38,6 +44,10 @@ namespace SmartTech.Marketing.Core.AppSetting
             services.Configure<FilesPathSetting>(configuration.GetSection(FilesPathSetting.SectionName));
             services.Configure<AuthenticationAppSetting>(configuration.GetSection(AuthenticationAppSetting.SectionName));
             services.Configure<EncryptionAppSetting>(configuration.GetSection(EncryptionAppSetting.SectionName));
+            services.Configure<RedisAppSetting>(configuration.GetSection(RedisAppSetting.SectionName));
+            services.Configure<ServiceAppSettings>(configuration.GetSection(ServiceAppSettings.SectionName));
+
+
 
             Init(configuration);
         }

@@ -6,6 +6,8 @@ using SmartTech.Marketing.Application.DependencyInjection;
 using SmartTech.Marketing.Core.AppSetting;
 using SmartTech.Marketing.Core.DependencyInjection;
 using SmartTech.Marketing.Persistence.Context;
+using Prometheus;
+using Microsoft.EntityFrameworkCore;
 
 namespace SmartTech.Marketing.WebApi.DependencyInjection
 {
@@ -15,8 +17,56 @@ namespace SmartTech.Marketing.WebApi.DependencyInjection
         {
             AddInitWebApi(services, configuration);
             AddPreLayers(services, configuration);
+            AddHealthCheck(services);
             AddDataBase(services);
             AddMapper(services);
+            AddCache(services);
+        }
+        public static void AddHealthCheck(IServiceCollection services)
+        {
+
+            var hcBuilder = services.AddHealthChecks();
+            //if (SettingsDependancyInjection.AwsSecreteManagerSetting.Enable)
+            //{
+            //    if (SettingsDependancyInjection.AwsSettings.IsRoleBased)
+            //    {
+            //        hcBuilder.AddSecretsManager(option =>
+            //        {
+
+            //        });
+            //    }
+            //    else
+            //    {
+            //        hcBuilder.AddSecretsManager(option =>
+            //        {
+
+            //            option.Credentials = new BasicAWSCredentials(
+            //                SettingsDependancyInjection.AwsSettings.UserAccessKeyId,
+            //                SettingsDependancyInjection.AwsSettings.UserAccessSecretKey);
+            //            option.RegionEndpoint =
+            //                RegionEndpoint.GetBySystemName(SettingsDependancyInjection.AwsSettings.Region);
+            //        });
+            //    }
+            //}
+
+           hcBuilder.AddNpgSql(SettingsDependancyInjection.PosSettings.ConnectionString!,name: "PostgreSQL");//.AddApplicationInsightsPublisher();
+
+
+            if (SettingsDependancyInjection.RedisSettings.Enable)
+            {
+                switch (SettingsDependancyInjection.RedisSettings.RedisClientType)
+                {
+                    case "ElasticCache":
+                        hcBuilder.AddRedis(
+                            $"{SettingsDependancyInjection.RedisSettings.ElasticCache.Server}:{SettingsDependancyInjection.RedisSettings.ElasticCache.Port}");
+                        break;
+                    case "OnPrem":
+                        hcBuilder.AddRedis(
+                            $"{SettingsDependancyInjection.RedisSettings.OnPrem.Server},password={SettingsDependancyInjection.RedisSettings.OnPrem.Password}");
+                        break;
+                }
+            }
+            hcBuilder.AddApplicationInsightsPublisher().ForwardToPrometheus();
         }
         private static void AddPreLayers(IServiceCollection services, IConfiguration configuration)
         {
@@ -53,6 +103,11 @@ namespace SmartTech.Marketing.WebApi.DependencyInjection
                     .AllowCredentials();
             }));
 
+        }
+        private static void AddCache(IServiceCollection services)
+        {
+            services.AddMemoryCache();
+            services.AddResponseCaching();
         }
 
     }
