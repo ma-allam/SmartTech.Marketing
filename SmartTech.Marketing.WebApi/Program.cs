@@ -1,24 +1,36 @@
+using HealthChecks.UI.Client;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Diagnostics.HealthChecks;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc.ApiExplorer;
 using Microsoft.AspNetCore.Mvc.Versioning;
+using Microsoft.Extensions.Diagnostics.HealthChecks;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
+using Prometheus;
+using SmartTech.Marketing.Application.Contract;
+using SmartTech.Marketing.Core.AppSetting;
 using SmartTech.Marketing.Core.Exceptions;
 using SmartTech.Marketing.Domain.Entities;
 using SmartTech.Marketing.Persistence.Context;
 using SmartTech.Marketing.WebApi.DependencyInjection;
 using SmartTech.Marketing.WebApi.Swagger;
+using StackExchange.Redis;
 using Swashbuckle.AspNetCore.Filters;
 using Swashbuckle.AspNetCore.SwaggerGen;
 using System.Security.Claims;
 using System.Text;
 
 var builder = WebApplication.CreateBuilder(args);
-
+builder.WebHost.ConfigureKestrel(serverOptions =>
+{
+    serverOptions.Limits.MaxConcurrentConnections = 1000;
+    serverOptions.Limits.MaxConcurrentUpgradedConnections = 1000;
+});
 // Add services to the container.
+builder.Services.AddWebApilayerDependencyInjection(builder.Configuration);
 
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
@@ -28,7 +40,15 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddIdentity<ApplicationUser, IdentityRole>()
     .AddEntityFrameworkStores<DatabaseService>()
     .AddDefaultTokenProviders();
-
+// Configure Redis caching
+//if (SettingsDependancyInjection.RedisSettings.Enable)
+//{
+//    builder.Services.AddStackExchangeRedisCache(options =>
+//    {
+//        options.Configuration = SettingsDependancyInjection.RedisSettings.OnPrem.Server;
+//        options.InstanceName = SettingsDependancyInjection.RedisSettings.OnPrem.InstanceName;
+//    });
+//}
 //builder.Services.AddAuthentication(options =>
 //{
 //    options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
@@ -115,18 +135,36 @@ builder.Services.AddVersionedApiExplorer(
         options.SubstituteApiVersionInUrl = true;
     });
 
-builder.Services.AddWebApilayerDependencyInjection(builder.Configuration);
 
+// Configure Redis caching
+//if (SettingsDependancyInjection.RedisSettings.Enable)
+//{
+
+//    builder.Services.AddSingleton<IConnectionMultiplexer>(sp =>
+//        {
+//            var configuration = ConfigurationOptions.Parse(SettingsDependancyInjection.RedisSettings.OnPrem.Server, true);
+//            return ConnectionMultiplexer.Connect(configuration);
+//        });
+//}
+// Register the cache service
+//builder.Services.AddScoped<CacheService>();
+
+//// Register the change tracker interceptor
+//builder.Services.AddScoped<ChangeTrackerInterceptor>();
+
+// Register the custom middleware
+string basePath = SettingsDependancyInjection.ServiceSettings.BaseServicePath;
 
 var app = builder.Build();
 app.ConfigureExceptionHandler(app.Environment);
 // Configure the HTTP request pipeline.
 builder.Services.AddEndpointsApiExplorer();
+var provider = app.Services.GetRequiredService<IApiVersionDescriptionProvider>();
 
-if (app.Environment.IsDevelopment())
+
+
+if (SettingsDependancyInjection.ServiceSettings.EnableSwagger)
 {
-    string basePath = "api";
-    var provider = app.Services.GetRequiredService<IApiVersionDescriptionProvider>();
     app.UseSwagger(c => { c.RouteTemplate = basePath + "/swagger/{documentName}/swagger.json"; });
     app.UseSwaggerUI(options =>
     {
@@ -148,7 +186,38 @@ app.UseMiddleware<GlobalAuthorizationControlMiddleware>();
 app.UseAuthentication();
 
 app.UseAuthorization();
-
+if (SettingsDependancyInjection.RedisSettings.Enable)
+{
+    app.UseMiddleware<RedisCacheMiddleware>();
+}
+// Use the custom middleware with factory pattern to resolve scoped services
+//app.Use(async (context, next) =>
+//{
+//    var cacheService = context.RequestServices.GetRequiredService<CacheService>();
+//    var middleware = new RedisCacheMiddleware(next, cacheService);
+//    await middleware.InvokeAsync(context);
+//});
 app.MapControllers();
+app.UseMetricServer();
 
+app.UseEndpoints(endpoints =>
+{
+    endpoints.MapMetrics($"/{basePath}/metrics");
+});
+
+app.MapHealthChecks($"/{basePath}/health/live", new HealthCheckOptions
+{
+    ResponseWriter = UIResponseWriter.WriteHealthCheckUIResponse
+});
+app.MapHealthChecks($"/{basePath}/", new HealthCheckOptions
+{
+    AllowCachingResponses = false,
+    ResultStatusCodes =
+                {
+                    [HealthStatus.Healthy] = StatusCodes.Status200OK,
+                    [HealthStatus.Degraded] = StatusCodes.Status200OK,
+                    [HealthStatus.Unhealthy] = StatusCodes.Status503ServiceUnavailable
+                }
+});
+app.UseHealthChecksPrometheusExporter($"/{basePath}/health/metrics");
 app.Run();

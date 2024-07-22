@@ -4,6 +4,7 @@ using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using SmartTech.Marketing.Application.Business.User.Command;
+using SmartTech.Marketing.Application.Contract;
 using SmartTech.Marketing.Core.Exceptions;
 using Swashbuckle.AspNetCore.Annotations;
 using System.Net;
@@ -25,6 +26,7 @@ namespace SmartTech.Marketing.WebApi.EndPoints.User.Command
 
         }
         [Authorize]
+        [NoCache]
         [ApiVersion("0.0")]
         [HttpPost(RefreshTokenEndPointRequest.Route)]
         [SwaggerOperation(Summary = "RefreshToken", Description = "RefreshToken ", OperationId = "SmartTech.Marketing.WebApi.EndPoints.User.Command.RefreshToken", Tags = new[] { "SmartTech.Marketing.WebApi.EndPoints.User" })]

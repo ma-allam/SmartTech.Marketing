@@ -17,8 +17,11 @@ namespace SmartTech.Marketing.Application.DependencyInjection
     {
         public static void AddApplicationDependencyInjection(this IServiceCollection services, IConfiguration configuration)
         {
+            //services.AddMediatR(typeof(IMediatorImplementor).Assembly);
             services.AddMediatR(cfg => cfg.RegisterServicesFromAssemblies(typeof(IMediatorImplementor).Assembly));
-            services.AddScoped<SignInManager<ApplicationUser>, CustomSignInManager>();
+
+            services.AddHandlers<IBusinessHandler>();
+            //services.AddScoped<SignInManager<ApplicationUser>, CustomSignInManager>();
         }
     }
 }

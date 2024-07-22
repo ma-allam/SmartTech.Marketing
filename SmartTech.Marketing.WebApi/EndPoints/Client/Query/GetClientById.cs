@@ -4,6 +4,7 @@ using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using SmartTech.Marketing.Application.Business.Clients.Query;
+using SmartTech.Marketing.Application.Contract;
 using SmartTech.Marketing.Core.Exceptions;
 using Swashbuckle.AspNetCore.Annotations;
 using System.Net;
@@ -24,6 +25,7 @@ namespace SmartTech.Marketing.WebApi.EndPoints.Client.Query
             _mapper = mapper;
 
         }
+        //[NoCache]
         [Authorize]
         [ApiVersion("0.0")]
         [HttpGet(GetClientByIdEndPointRequest.Route)]

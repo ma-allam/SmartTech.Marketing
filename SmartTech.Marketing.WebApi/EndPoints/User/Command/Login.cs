@@ -4,6 +4,7 @@ using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using SmartTech.Marketing.Application.Business.User.Command;
+using SmartTech.Marketing.Application.Contract;
 using Swashbuckle.AspNetCore.Annotations;
 using System.Net;
 
@@ -24,6 +25,7 @@ namespace SmartTech.Marketing.WebApi.EndPoints.User.Command
 
         }
         //[Authorize]
+        [NoCache]
         [ApiVersion("0.0")]
         [HttpPost(LoginEndPointRequest.Route)]
         [SwaggerOperation(Summary = "Login", Description = "Login ", OperationId = "SmartTech.Marketing.WebApi.EndPoints.User.Command.Login", Tags = new[] { "SmartTech.Marketing.WebApi.EndPoints.User" })]
