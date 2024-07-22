@@ -17,6 +17,7 @@ using SmartTech.Marketing.Domain.Entities;
 using SmartTech.Marketing.Persistence.Context;
 using SmartTech.Marketing.WebApi.DependencyInjection;
 using SmartTech.Marketing.WebApi.Swagger;
+using StackExchange.Redis;
 using Swashbuckle.AspNetCore.Filters;
 using Swashbuckle.AspNetCore.SwaggerGen;
 using System.Security.Claims;
@@ -40,14 +41,14 @@ builder.Services.AddIdentity<ApplicationUser, IdentityRole>()
     .AddEntityFrameworkStores<DatabaseService>()
     .AddDefaultTokenProviders();
 // Configure Redis caching
-if (SettingsDependancyInjection.RedisSettings.Enable)
-{
-    builder.Services.AddStackExchangeRedisCache(options =>
-    {
-        options.Configuration = SettingsDependancyInjection.RedisSettings.OnPrem.Server;
-        options.InstanceName = "SampleInstance";
-    });
-}
+//if (SettingsDependancyInjection.RedisSettings.Enable)
+//{
+//    builder.Services.AddStackExchangeRedisCache(options =>
+//    {
+//        options.Configuration = SettingsDependancyInjection.RedisSettings.OnPrem.Server;
+//        options.InstanceName = SettingsDependancyInjection.RedisSettings.OnPrem.InstanceName;
+//    });
+//}
 //builder.Services.AddAuthentication(options =>
 //{
 //    options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
@@ -135,6 +136,23 @@ builder.Services.AddVersionedApiExplorer(
     });
 
 
+// Configure Redis caching
+//if (SettingsDependancyInjection.RedisSettings.Enable)
+//{
+
+//    builder.Services.AddSingleton<IConnectionMultiplexer>(sp =>
+//        {
+//            var configuration = ConfigurationOptions.Parse(SettingsDependancyInjection.RedisSettings.OnPrem.Server, true);
+//            return ConnectionMultiplexer.Connect(configuration);
+//        });
+//}
+// Register the cache service
+//builder.Services.AddScoped<CacheService>();
+
+//// Register the change tracker interceptor
+//builder.Services.AddScoped<ChangeTrackerInterceptor>();
+
+// Register the custom middleware
 string basePath = SettingsDependancyInjection.ServiceSettings.BaseServicePath;
 
 var app = builder.Build();
@@ -172,6 +190,13 @@ if (SettingsDependancyInjection.RedisSettings.Enable)
 {
     app.UseMiddleware<RedisCacheMiddleware>();
 }
+// Use the custom middleware with factory pattern to resolve scoped services
+//app.Use(async (context, next) =>
+//{
+//    var cacheService = context.RequestServices.GetRequiredService<CacheService>();
+//    var middleware = new RedisCacheMiddleware(next, cacheService);
+//    await middleware.InvokeAsync(context);
+//});
 app.MapControllers();
 app.UseMetricServer();
 

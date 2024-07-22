@@ -86,58 +86,58 @@ namespace SmartTech.Marketing.Core.DependencyInjection
             });
             return services;
         }
-        public static void AddRedis(this IServiceCollection services)
-        {
+        //public static void AddRedis(this IServiceCollection services)
+        //{
 
-            if (!SettingsDependancyInjection.RedisSettings.Enable)
-            {
-                services.AddSingleton<ICacheService, TempCacheService>();
-                return;
-            }
-            if (SettingsDependancyInjection.RedisSettings.RedisClientType == RedisClientType.ElasticCache)
-            {
-                services.AddSingleton<IConnectionMultiplexer>(provider =>
-                {
+        //    if (!SettingsDependancyInjection.RedisSettings.Enable)
+        //    {
+        //        services.AddSingleton<ICacheService, TempCacheService>();
+        //        return;
+        //    }
+        //    if (SettingsDependancyInjection.RedisSettings.RedisClientType == RedisClientType.ElasticCache)
+        //    {
+        //        services.AddSingleton<IConnectionMultiplexer>(provider =>
+        //        {
 
-                    var redisConnectionString = $"{SettingsDependancyInjection.RedisSettings.ElasticCache.Server}:{SettingsDependancyInjection.RedisSettings.ElasticCache.Port}";
-
-
-                    ConfigurationOptions configuration = new ConfigurationOptions
-                    {
-                        EndPoints = { SettingsDependancyInjection.RedisSettings.ElasticCache.PrimaryEndPoint },
-                        AllowAdmin = true,
-                        ConnectTimeout = 5000, // Adjust as needed
-                        SyncTimeout = 5000 // Adjust as needed
-                    };
-
-                    // Add read replicas to the configuration
-                    configuration.EndPoints.Add(SettingsDependancyInjection.RedisSettings.ElasticCache.ReplicaEndPoint);
-
-                    return ConnectionMultiplexer.Connect(configuration);
-                });
-                services.AddSingleton<ICacheService, AwsCacheService>();
-            }
-            else
-            {
-                if (SettingsDependancyInjection.PosSettings.ConnectionString == RedisClientType.OnPrem)
-                {
-                    services.AddSingleton<ICacheService, CacheService>();
-                    string redisConnectionString = "";
-                    if (!string.IsNullOrEmpty(SettingsDependancyInjection.RedisSettings.OnPrem.Password))
-                    {
-                        redisConnectionString = $"{SettingsDependancyInjection.RedisSettings.OnPrem.Server}:{SettingsDependancyInjection.RedisSettings.OnPrem.Port},password={SettingsDependancyInjection.RedisSettings.OnPrem.Password}";
-                    }
-                    else
-                    {
-                        redisConnectionString = $"{SettingsDependancyInjection.RedisSettings.OnPrem.Server}:{SettingsDependancyInjection.RedisSettings.OnPrem.Port}";
-                    }
+        //            var redisConnectionString = $"{SettingsDependancyInjection.RedisSettings.ElasticCache.Server}:{SettingsDependancyInjection.RedisSettings.ElasticCache.Port}";
 
 
-                    services.AddSingleton<IConnectionMultiplexer>(_ => ConnectionMultiplexer.Connect(redisConnectionString));
-                    services.AddStackExchangeRedisCache(options => options.Configuration = redisConnectionString);
-                }
-            }
-        }
+        //            ConfigurationOptions configuration = new ConfigurationOptions
+        //            {
+        //                EndPoints = { SettingsDependancyInjection.RedisSettings.ElasticCache.PrimaryEndPoint },
+        //                AllowAdmin = true,
+        //                ConnectTimeout = 5000, // Adjust as needed
+        //                SyncTimeout = 5000 // Adjust as needed
+        //            };
+
+        //            // Add read replicas to the configuration
+        //            configuration.EndPoints.Add(SettingsDependancyInjection.RedisSettings.ElasticCache.ReplicaEndPoint);
+
+        //            return ConnectionMultiplexer.Connect(configuration);
+        //        });
+        //        services.AddSingleton<ICacheService, AwsCacheService>();
+        //    }
+        //    else
+        //    {
+        //        if (SettingsDependancyInjection.PosSettings.ConnectionString == RedisClientType.OnPrem)
+        //        {
+        //            services.AddSingleton<ICacheService, CacheService>();
+        //            string redisConnectionString = "";
+        //            if (!string.IsNullOrEmpty(SettingsDependancyInjection.RedisSettings.OnPrem.Password))
+        //            {
+        //                redisConnectionString = $"{SettingsDependancyInjection.RedisSettings.OnPrem.Server}:{SettingsDependancyInjection.RedisSettings.OnPrem.Port},password={SettingsDependancyInjection.RedisSettings.OnPrem.Password}";
+        //            }
+        //            else
+        //            {
+        //                redisConnectionString = $"{SettingsDependancyInjection.RedisSettings.OnPrem.Server}:{SettingsDependancyInjection.RedisSettings.OnPrem.Port}";
+        //            }
+
+
+        //            services.AddSingleton<IConnectionMultiplexer>(_ => ConnectionMultiplexer.Connect(redisConnectionString));
+        //            services.AddStackExchangeRedisCache(options => options.Configuration = redisConnectionString);
+        //        }
+        //    }
+        //}
 
        
     }

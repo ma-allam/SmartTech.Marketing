@@ -1,4 +1,5 @@
 ﻿using MediatR;
+using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using SmartTech.Marketing.Application.Contract;
@@ -9,15 +10,19 @@ namespace SmartTech.Marketing.Application.Business.Clients.Query
     {
         private readonly IDataBaseService _databaseService;
         private readonly ILogger<GetClientByIdHandler> _logger;
-        public GetClientByIdHandler(ILogger<GetClientByIdHandler> logger, IDataBaseService databaseService)
+        private readonly IHttpContextAccessor _httpContextAccessor;
+
+        public GetClientByIdHandler(ILogger<GetClientByIdHandler> logger, IDataBaseService databaseService, IHttpContextAccessor httpContextAccessor)
         {
             _logger = logger;
             _databaseService = databaseService;
+            _httpContextAccessor = httpContextAccessor;
         }
         public async Task<GetClientByIdHandlerOutput> Handle(GetClientByIdHandlerInput request, CancellationToken cancellationToken)
         {
             _logger.LogInformation("Handling GetClientById business logic");
             GetClientByIdHandlerOutput output = new GetClientByIdHandlerOutput(request.CorrelationId());
+            _httpContextAccessor.HttpContext.Response.Headers.Add("EntityNames" , "Client,User");
             output.Client = await _databaseService.Client.Where(o => o.Id == request.ClientId).Select(o => new ClientData
             {
                 ClientId = o.Id,
