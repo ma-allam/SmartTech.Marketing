@@ -45,11 +45,7 @@ namespace SmartTech.Marketing.Core.DependencyInjection
                     ValidateAudience = true,
                     ValidateLifetime = true,
                     ValidateIssuerSigningKey = true,
-<<<<<<< HEAD
                     ValidIssuer =SettingsDependancyInjection.AuthenticationSettings.Jwt.issuer,
-=======
-                    ValidIssuer = SettingsDependancyInjection.AuthenticationSettings.Jwt.issuer,
->>>>>>> master
                     ValidAudience = SettingsDependancyInjection.AuthenticationSettings.Jwt.issuer,
                     IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(SettingsDependancyInjection.AuthenticationSettings.Jwt.secretKey)),
                     RoleClaimType = ClaimTypes.Role

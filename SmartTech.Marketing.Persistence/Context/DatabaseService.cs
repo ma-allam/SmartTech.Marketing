@@ -90,15 +90,8 @@ public partial class DatabaseService : IdentityDbContext<ApplicationUser>, IData
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
 #warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see https://go.microsoft.com/fwlink/?LinkId=723263.
-<<<<<<< HEAD
         => optionsBuilder.UseNpgsql("Server=172.16.30.50:5432;Database=SMS;Username=postgres;Password=postgres;", x => x.UseNetTopologySuite());
 
-=======
-    {
-        optionsBuilder.UseNpgsql("Server=172.16.30.50:25432;Database=SMS;Username=postgres;Password=W0rldE@ter;", x => x.UseNetTopologySuite());
-        optionsBuilder.AddInterceptors(_changeTrackerInterceptor);
-    }
->>>>>>> master
     //protected override void OnModelCreating(ModelBuilder modelBuilder)
     //{
     //    modelBuilder.HasPostgresExtension("postgis");

@@ -24,11 +24,7 @@ namespace SmartTech.Marketing.WebApi.EndPoints.User.Command
             _mapper = mapper;
 
         }
-        //[Authorize]
-<<<<<<< HEAD
-=======
-        [NoCache]
->>>>>>> master
+        [Authorize]
         [ApiVersion("0.0")]
         [HttpPost(RegisterEndPointRequest.Route)]
         [SwaggerOperation(Summary = "Register", Description = "Register ", OperationId = "SmartTech.Marketing.WebApi.EndPoints.User.Command.Register", Tags = new[] { "SmartTech.Marketing.WebApi.EndPoints.User" })]
