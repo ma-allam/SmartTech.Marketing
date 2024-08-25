@@ -30,7 +30,6 @@ builder.WebHost.ConfigureKestrel(serverOptions =>
     serverOptions.Limits.MaxConcurrentUpgradedConnections = 1000;
 });
 // Add services to the container.
-builder.Services.AddWebApilayerDependencyInjection(builder.Configuration);
 
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
@@ -134,6 +133,7 @@ builder.Services.AddVersionedApiExplorer(
         options.GroupNameFormat = "'v'VVV";
         options.SubstituteApiVersionInUrl = true;
     });
+builder.Services.AddWebApilayerDependencyInjection(builder.Configuration);
 
 
 // Configure Redis caching
