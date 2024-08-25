@@ -40,9 +40,9 @@ namespace SmartTech.Marketing.Core.DependencyInjection
                     ValidateAudience = true,
                     ValidateLifetime = true,
                     ValidateIssuerSigningKey = true,
-                    ValidIssuer = configuration["Jwt:Issuer"],
-                    ValidAudience = configuration["Jwt:Audience"],
-                    IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(configuration["Jwt:Key"])),
+                    ValidIssuer =SettingsDependancyInjection.AuthenticationSettings.Jwt.issuer,
+                    ValidAudience = SettingsDependancyInjection.AuthenticationSettings.Jwt.issuer,
+                    IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(SettingsDependancyInjection.AuthenticationSettings.Jwt.secretKey)),
                     RoleClaimType = ClaimTypes.Role
                 };
             });
