@@ -20,7 +20,7 @@ namespace SmartTech.Marketing.Application.DependencyInjection
             //services.AddMediatR(typeof(IMediatorImplementor).Assembly);
             services.AddMediatR(cfg => cfg.RegisterServicesFromAssemblies(typeof(IMediatorImplementor).Assembly));
 
-            services.AddHandlers<IBusinessHandler>();
+            //services.AddHandlers<IBusinessHandler>();
             //services.AddScoped<SignInManager<ApplicationUser>, CustomSignInManager>();
         }
     }
