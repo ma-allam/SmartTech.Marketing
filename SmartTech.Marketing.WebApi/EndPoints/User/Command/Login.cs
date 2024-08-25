@@ -4,6 +4,7 @@ using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using SmartTech.Marketing.Application.Business.User.Command;
+using SmartTech.Marketing.Application.Contract;
 using Swashbuckle.AspNetCore.Annotations;
 using System.Net;
 
@@ -24,9 +25,13 @@ namespace SmartTech.Marketing.WebApi.EndPoints.User.Command
 
         }
         //[Authorize]
+<<<<<<< HEAD
+=======
+        [NoCache]
+>>>>>>> master
         [ApiVersion("0.0")]
         [HttpPost(LoginEndPointRequest.Route)]
-        [SwaggerOperation(Summary = "Login", Description = "Login ", OperationId = "SmartTech.Marketing.WebApi.EndPoints.User.Login", Tags = new[] { "SmartTech.Marketing.WebApi.EndPoints.User" })]
+        [SwaggerOperation(Summary = "Login", Description = "Login ", OperationId = "SmartTech.Marketing.WebApi.EndPoints.User.Command.Login", Tags = new[] { "SmartTech.Marketing.WebApi.EndPoints.User" })]
         [SwaggerResponse((int)HttpStatusCode.OK, Type = typeof(LoginEndPointResponse))]
         //[SwaggerResponse((int)HttpStatusCode.BadRequest, Type = typeof(ExceptionOutput))]
         public override async Task<ActionResult<LoginEndPointResponse>> HandleAsync([FromBody] LoginEndPointRequest request, CancellationToken cancellationToken = default)

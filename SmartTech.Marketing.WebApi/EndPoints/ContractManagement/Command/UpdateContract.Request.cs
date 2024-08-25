@@ -48,6 +48,6 @@ namespace SmartTech.Marketing.WebApi.EndPoints.ContractManagement.Command
         public List<ContractPaymentInformationInput> ContractPaymentInformation { get; set; }
         public List<ContractPeriodInput> ContractPeriods { get; set; }
         public List<ContractServiceInput> ContractServices { get; set; }
-        public List<AttachmentInput> Attachments { get; set; }
+        //public List<AttachmentInput> Attachments { get; set; }
     }
 }

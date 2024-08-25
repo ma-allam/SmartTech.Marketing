@@ -174,67 +174,67 @@ namespace SmartTech.Marketing.Application.Business.ContractManagement.Command
                     await _databaseService.DBSaveChangesAsync(cancellationToken);
                     #endregion
 
-                    #region Upload Files
-                    var httpContext = _contextAccessor.HttpContext;
+                    //#region Upload Files
+                    //var httpContext = _contextAccessor.HttpContext;
 
-                    if (request.Attachments != null && request.Attachments.Count > 0)
-                    {
-                        var uploadsPath = Path.Combine(_environment.WebRootPath, SettingsDependancyInjection.FilesPathSettings.Path!);
-                        if (string.IsNullOrEmpty(uploadsPath))
-                        {
-                            throw new WebApiException(WebApiExceptionSource.DynamicMessage, "Uploads path is not configured.");
-                        }
+                    //if (request.Attachments != null && request.Attachments.Count > 0)
+                    //{
+                    //    var uploadsPath = Path.Combine(_environment.WebRootPath, SettingsDependancyInjection.FilesPathSettings.Path!);
+                    //    if (string.IsNullOrEmpty(uploadsPath))
+                    //    {
+                    //        throw new WebApiException(WebApiExceptionSource.DynamicMessage, "Uploads path is not configured.");
+                    //    }
 
-                        if (!Directory.Exists(uploadsPath))
-                        {
-                            Directory.CreateDirectory(uploadsPath);
-                        }
+                    //    if (!Directory.Exists(uploadsPath))
+                    //    {
+                    //        Directory.CreateDirectory(uploadsPath);
+                    //    }
 
-                        foreach (var file in request.Attachments)
-                        {
-                            try
-                            {
-                                if (file.File.Length > 5 * 1024 * 1024) // 5MB
-                                {
-                                    throw new WebApiException(WebApiExceptionSource.DynamicMessage, "File size cannot exceed 5MB");
-                                }
-                                var FileName = Path.GetFileName(file.File.FileName);
-                                var FileExtension = Path.GetExtension(file.File.FileName);
-                                var FileId = Guid.NewGuid();
-                                var SaveFileName = FileId.ToString() + FileExtension;
-                                var filePath = Path.Combine(uploadsPath, SaveFileName);
+                    //    foreach (var file in request.Attachments)
+                    //    {
+                    //        try
+                    //        {
+                    //            if (file.File.Length > 5 * 1024 * 1024) // 5MB
+                    //            {
+                    //                throw new WebApiException(WebApiExceptionSource.DynamicMessage, "File size cannot exceed 5MB");
+                    //            }
+                    //            var FileName = Path.GetFileName(file.File.FileName);
+                    //            var FileExtension = Path.GetExtension(file.File.FileName);
+                    //            var FileId = Guid.NewGuid();
+                    //            var SaveFileName = FileId.ToString() + FileExtension;
+                    //            var filePath = Path.Combine(uploadsPath, SaveFileName);
 
-                                using (var stream = new FileStream(filePath, FileMode.Create))
-                                {
-                                    await file.File.CopyToAsync(stream);
-                                }
+                    //            using (var stream = new FileStream(filePath, FileMode.Create))
+                    //            {
+                    //                await file.File.CopyToAsync(stream);
+                    //            }
 
-                                var fileUrl = $"{httpContext.Request.Scheme}://{httpContext.Request.Host}/{SettingsDependancyInjection.FilesPathSettings.Path}/{SaveFileName}";
+                    //            var fileUrl = $"{httpContext.Request.Scheme}://{httpContext.Request.Host}/{SettingsDependancyInjection.FilesPathSettings.Path}/{SaveFileName}";
 
-                                var fileMetadata = new ContractAttachments
-                                {
-                                    ContractId = contract.Id,
-                                    Tags = file.Tags,
-                                    Name = FileName,
-                                    AttachmentId = FileId,
-                                    FileExtension = FileExtension,
-                                    Notes = file.Notes,
-                                    FileUrl = fileUrl,
-                                    UploadDate = DateOnly.FromDateTime(DateTime.Now)
-                                };
+                    //            var fileMetadata = new ContractAttachments
+                    //            {
+                    //                ContractId = contract.Id,
+                    //                Tags = file.Tags,
+                    //                Name = FileName,
+                    //                AttachmentId = FileId,
+                    //                FileExtension = FileExtension,
+                    //                Notes = file.Notes,
+                    //                FileUrl = fileUrl,
+                    //                UploadDate = DateOnly.FromDateTime(DateTime.Now)
+                    //            };
 
-                                _databaseService.ContractAttachments.Add(fileMetadata);
-                            }
-                            catch (Exception ex)
-                            {
-                                _logger.LogError(ex, $"Error uploading file: {file.File.FileName}");
-                                throw new WebApiException(WebApiExceptionSource.DynamicMessage, $"Error uploading file: {file.File.FileName}", ex);
-                            }
-                        }
+                    //            _databaseService.ContractAttachments.Add(fileMetadata);
+                    //        }
+                    //        catch (Exception ex)
+                    //        {
+                    //            _logger.LogError(ex, $"Error uploading file: {file.File.FileName}");
+                    //            throw new WebApiException(WebApiExceptionSource.DynamicMessage, $"Error uploading file: {file.File.FileName}", ex);
+                    //        }
+                    //    }
 
-                        await _databaseService.DBSaveChangesAsync(cancellationToken);
-                    }
-                    #endregion
+                    //    await _databaseService.DBSaveChangesAsync(cancellationToken);
+                    //}
+                    //#endregion
 
                     await transaction.CommitAsync(cancellationToken);
                     output.Message = "Contract updated successfully with all related data.";

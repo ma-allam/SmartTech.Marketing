@@ -27,7 +27,7 @@ namespace SmartTech.Marketing.WebApi.EndPoints.Client.Command
         [Authorize]
         [ApiVersion("0.0")]
         [HttpPost(AddNewClientEndPointRequest.Route)]
-        [SwaggerOperation(Summary = "AddNewClient", Description = "AddNewClient ", OperationId = "SmartTech.Marketing.WebApi.EndPoints.Client.Query.Command.AddNewClient", Tags = new[] { "SmartTech.Marketing.WebApi.EndPoints.Client.Query.Command" })]
+        [SwaggerOperation(Summary = "AddNewClient", Description = "AddNewClient ", OperationId = "SmartTech.Marketing.WebApi.EndPoints.Client.Command.AddNewClient", Tags = new[] { "SmartTech.Marketing.WebApi.EndPoints.Client" })]
         [SwaggerResponse((int)HttpStatusCode.OK, Type = typeof(AddNewClientEndPointResponse))]
         [SwaggerResponse((int)HttpStatusCode.BadRequest, Type = typeof(ExceptionOutput))]
         public override async Task<ActionResult<AddNewClientEndPointResponse>> HandleAsync([FromBody] AddNewClientEndPointRequest request, CancellationToken cancellationToken = default)

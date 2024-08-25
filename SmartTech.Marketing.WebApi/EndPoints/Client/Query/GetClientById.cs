@@ -4,6 +4,7 @@ using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using SmartTech.Marketing.Application.Business.Clients.Query;
+using SmartTech.Marketing.Application.Contract;
 using SmartTech.Marketing.Core.Exceptions;
 using Swashbuckle.AspNetCore.Annotations;
 using System.Net;
@@ -24,10 +25,11 @@ namespace SmartTech.Marketing.WebApi.EndPoints.Client.Query
             _mapper = mapper;
 
         }
+        //[NoCache]
         [Authorize]
         [ApiVersion("0.0")]
         [HttpGet(GetClientByIdEndPointRequest.Route)]
-        [SwaggerOperation(Summary = "GetClientById", Description = "GetClientById ", OperationId = "SmartTech.Marketing.WebApi.EndPoints.Client.Query.GetClientById", Tags = new[] { "SmartTech.Marketing.WebApi.EndPoints.Client.Query" })]
+        [SwaggerOperation(Summary = "GetClientById", Description = "GetClientById ", OperationId = "SmartTech.Marketing.WebApi.EndPoints.Client.Query.GetClientById", Tags = new[] { "SmartTech.Marketing.WebApi.EndPoints.Client" })]
         [SwaggerResponse((int)HttpStatusCode.OK, Type = typeof(GetClientByIdEndPointResponse))]
         [SwaggerResponse((int)HttpStatusCode.BadRequest, Type = typeof(ExceptionOutput))]
         public override async Task<ActionResult<GetClientByIdEndPointResponse>> HandleAsync([FromQuery]GetClientByIdEndPointRequest request, CancellationToken cancellationToken = default)

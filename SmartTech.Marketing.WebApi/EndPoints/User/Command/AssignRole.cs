@@ -4,6 +4,7 @@ using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using SmartTech.Marketing.Application.Business.User.Command;
+using SmartTech.Marketing.Application.Contract;
 using SmartTech.Marketing.Core.Exceptions;
 using Swashbuckle.AspNetCore.Annotations;
 using System.Net;
@@ -25,9 +26,10 @@ namespace SmartTech.Marketing.WebApi.EndPoints.User.Command
 
         }
         [Authorize]
+        [NoCache]
         [ApiVersion("0.0")]
         [HttpPost(AssignRoleEndPointRequest.Route)]
-        [SwaggerOperation(Summary = "AssignRole", Description = "AssignRole ", OperationId = "SmartTech.Marketing.WebApi.EndPoints.User.Command.AssignRole", Tags = new[] { "SmartTech.Marketing.WebApi.EndPoints.User.Command" })]
+        [SwaggerOperation(Summary = "AssignRole", Description = "AssignRole ", OperationId = "SmartTech.Marketing.WebApi.EndPoints.User.Command.AssignRole", Tags = new[] { "SmartTech.Marketing.WebApi.EndPoints.User" })]
         [SwaggerResponse((int)HttpStatusCode.OK, Type = typeof(AssignRoleEndPointResponse))]
         [SwaggerResponse((int)HttpStatusCode.BadRequest, Type = typeof(ExceptionOutput))]
         public override async Task<ActionResult<AssignRoleEndPointResponse>> HandleAsync([FromBody]AssignRoleEndPointRequest request, CancellationToken cancellationToken = default)

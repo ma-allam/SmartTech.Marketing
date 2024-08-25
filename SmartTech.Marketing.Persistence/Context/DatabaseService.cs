@@ -4,20 +4,23 @@ using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using NetTopologySuite.Geometries;
 using SmartTech.Marketing.Application.Contract;
+using SmartTech.Marketing.Core.Cache;
 using SmartTech.Marketing.Domain.Entities;
 
 namespace SmartTech.Marketing.Persistence.Context;
 
-public partial class DatabaseService : IdentityDbContext<ApplicationUser>,IDataBaseService
+public partial class DatabaseService : IdentityDbContext<ApplicationUser>, IDataBaseService
 {
+    private readonly ChangeTrackerInterceptor _changeTrackerInterceptor;
     public DatabaseService()
     {
     }
 
-    public DatabaseService(DbContextOptions<DatabaseService> options)
+    public DatabaseService(DbContextOptions<DatabaseService> options, ChangeTrackerInterceptor changeTrackerInterceptor)
         : base(options)
     {
         Database.EnsureCreated();
+        _changeTrackerInterceptor = changeTrackerInterceptor;
     }
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
@@ -28,7 +31,7 @@ public partial class DatabaseService : IdentityDbContext<ApplicationUser>,IDataB
             .WithOne(c => c.User)
             .HasForeignKey<Client>(c => c.UserId)
             .OnDelete(DeleteBehavior.Cascade); // Or another delete behavior as appropriate
-      
+
     }
     public virtual DbSet<ClientType> ClientType { get; set; }
 
@@ -87,8 +90,15 @@ public partial class DatabaseService : IdentityDbContext<ApplicationUser>,IDataB
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
 #warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see https://go.microsoft.com/fwlink/?LinkId=723263.
+<<<<<<< HEAD
         => optionsBuilder.UseNpgsql("Server=172.16.30.50:5432;Database=SMS;Username=postgres;Password=postgres;", x => x.UseNetTopologySuite());
 
+=======
+    {
+        optionsBuilder.UseNpgsql("Server=172.16.30.50:25432;Database=SMS;Username=postgres;Password=W0rldE@ter;", x => x.UseNetTopologySuite());
+        optionsBuilder.AddInterceptors(_changeTrackerInterceptor);
+    }
+>>>>>>> master
     //protected override void OnModelCreating(ModelBuilder modelBuilder)
     //{
     //    modelBuilder.HasPostgresExtension("postgis");

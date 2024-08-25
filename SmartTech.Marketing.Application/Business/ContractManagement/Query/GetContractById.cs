@@ -127,6 +127,10 @@ namespace SmartTech.Marketing.Application.Business.ContractManagement.Query
                 output.Contract = contractDto;
                 output.Message = "Contract retrieved successfully.";
             }
+            catch(WebApiException)
+            {
+                throw;
+            }
             catch (Exception ex)
             {
                 _logger.LogError(ex, "Error occurred while retrieving the contract");

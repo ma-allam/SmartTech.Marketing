@@ -27,7 +27,7 @@ namespace SmartTech.Marketing.WebApi.EndPoints.Client.Command
         [Authorize]
         [ApiVersion("0.0")]
         [HttpPost(UpdateClientEndPointRequest.Route)]
-        [SwaggerOperation(Summary = "UpdateClient", Description = "UpdateClient ", OperationId = "SmartTech.Marketing.WebApi.EndPoints.Client.Command.UpdateClient", Tags = new[] { "SmartTech.Marketing.WebApi.EndPoints.Client.Command" })]
+        [SwaggerOperation(Summary = "UpdateClient", Description = "UpdateClient ", OperationId = "SmartTech.Marketing.WebApi.EndPoints.Client.Command.UpdateClient", Tags = new[] { "SmartTech.Marketing.WebApi.EndPoints.Client" })]
         [SwaggerResponse((int)HttpStatusCode.OK, Type = typeof(UpdateClientEndPointResponse))]
         [SwaggerResponse((int)HttpStatusCode.BadRequest, Type = typeof(ExceptionOutput))]
         public override async Task<ActionResult<UpdateClientEndPointResponse>> HandleAsync([FromBody]UpdateClientEndPointRequest request, CancellationToken cancellationToken = default)
