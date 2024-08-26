@@ -16,14 +16,20 @@ using SmartTech.Marketing.Core.Exceptions;
 using SmartTech.Marketing.Domain.Entities;
 using SmartTech.Marketing.Persistence.Context;
 using SmartTech.Marketing.WebApi.DependencyInjection;
-using SmartTech.Marketing.WebApi.Swagger;
 using StackExchange.Redis;
 using Swashbuckle.AspNetCore.Filters;
 using Swashbuckle.AspNetCore.SwaggerGen;
 using System.Security.Claims;
 using System.Text;
+using Serilog;
+
 
 var builder = WebApplication.CreateBuilder(args);
+// Configure Serilog
+builder.Host.UseSerilog((context, services, configuration) => configuration
+    .ReadFrom.Configuration(context.Configuration)
+    .ReadFrom.Services(services)
+    .Enrich.FromLogContext());
 builder.WebHost.ConfigureKestrel(serverOptions =>
 {
     serverOptions.Limits.MaxConcurrentConnections = 1000;
@@ -39,84 +45,7 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddIdentity<ApplicationUser, IdentityRole>()
     .AddEntityFrameworkStores<DatabaseService>()
     .AddDefaultTokenProviders();
-// Configure Redis caching
-//if (SettingsDependancyInjection.RedisSettings.Enable)
-//{
-//    builder.Services.AddStackExchangeRedisCache(options =>
-//    {
-//        options.Configuration = SettingsDependancyInjection.RedisSettings.OnPrem.Server;
-//        options.InstanceName = SettingsDependancyInjection.RedisSettings.OnPrem.InstanceName;
-//    });
-//}
-//builder.Services.AddAuthentication(options =>
-//{
-//    options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
-//    options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
-//})
-//.AddJwtBearer(options =>
-//{
-//    options.TokenValidationParameters = new TokenValidationParameters
-//    {
-//        ValidateIssuer = true,
-//        ValidateAudience = true,
-//        ValidateLifetime = true,
-//        ValidateIssuerSigningKey = true,
-//        ValidIssuer = builder.Configuration["Jwt:Issuer"],
-//        ValidAudience = builder.Configuration["Jwt:Audience"],
-//        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration["Jwt:Key"])),
-//        RoleClaimType = ClaimTypes.Role
-//    };
-//});
-//builder.Services.Configure<IdentityOptions>(options =>
-//{
-//    // Password settings.
-//    options.Password.RequireDigit = true;
-//    options.Password.RequireLowercase = true;
-//    options.Password.RequireNonAlphanumeric = true;
-//    options.Password.RequireUppercase = true;
-//    options.Password.RequiredLength = 6;
-//    options.Password.RequiredUniqueChars = 1;
 
-//    // Lockout settings.
-//    options.Lockout.DefaultLockoutTimeSpan = TimeSpan.FromMinutes(5);
-//    options.Lockout.MaxFailedAccessAttempts = 5;
-//    options.Lockout.AllowedForNewUsers = true;
-
-//    // User settings.
-//    options.User.AllowedUserNameCharacters =
-//    "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789-._@+";
-//    options.User.RequireUniqueEmail = false;
-
-
-
-//});
-//builder.Services.ConfigureApplicationCookie(options =>
-//{
-//    // Cookie settings
-//    options.Cookie.HttpOnly = true;
-//    options.ExpireTimeSpan = TimeSpan.FromMinutes(60);
-
-//    options.LoginPath = "/Account/Login";
-//    options.AccessDeniedPath = "/Account/AccessDenied";
-//    options.SlidingExpiration = true;
-//});
-
-//builder.Services.AddTransient<IConfigureOptions<SwaggerGenOptions>, ConfigureSwaggerOptions>();
-//builder.Services.AddSwaggerGen();
-//builder.Services.AddSwaggerGen(c =>
-//{
-//    c.AddSecurityDefinition("oauth2", new OpenApiSecurityScheme
-//    {
-//        Description = "Standard Authorization header using the Bearer scheme. Example: \"bearer {token}\"",
-//        In = ParameterLocation.Header,
-//        Name = "Authorization",
-//        Type = SecuritySchemeType.ApiKey
-//    });
-
-//    c.OperationFilter<SecurityRequirementsOperationFilter>();
-//    c.EnableAnnotations();
-//    c.OperationFilter<SwaggerDefaultValues>();
-//});
 builder.Services.AddApiVersioning(o =>
 {
 
@@ -136,21 +65,6 @@ builder.Services.AddVersionedApiExplorer(
 builder.Services.AddWebApilayerDependencyInjection(builder.Configuration);
 
 
-// Configure Redis caching
-//if (SettingsDependancyInjection.RedisSettings.Enable)
-//{
-
-//    builder.Services.AddSingleton<IConnectionMultiplexer>(sp =>
-//        {
-//            var configuration = ConfigurationOptions.Parse(SettingsDependancyInjection.RedisSettings.OnPrem.Server, true);
-//            return ConnectionMultiplexer.Connect(configuration);
-//        });
-//}
-// Register the cache service
-//builder.Services.AddScoped<CacheService>();
-
-//// Register the change tracker interceptor
-//builder.Services.AddScoped<ChangeTrackerInterceptor>();
 
 // Register the custom middleware
 string basePath = SettingsDependancyInjection.ServiceSettings.BaseServicePath;
@@ -158,7 +72,7 @@ string basePath = SettingsDependancyInjection.ServiceSettings.BaseServicePath;
 var app = builder.Build();
 app.ConfigureExceptionHandler(app.Environment);
 // Configure the HTTP request pipeline.
-builder.Services.AddEndpointsApiExplorer();
+//builder.Services.AddEndpointsApiExplorer();
 var provider = app.Services.GetRequiredService<IApiVersionDescriptionProvider>();
 
 
@@ -190,13 +104,7 @@ if (SettingsDependancyInjection.RedisSettings.Enable)
 {
     app.UseMiddleware<RedisCacheMiddleware>();
 }
-// Use the custom middleware with factory pattern to resolve scoped services
-//app.Use(async (context, next) =>
-//{
-//    var cacheService = context.RequestServices.GetRequiredService<CacheService>();
-//    var middleware = new RedisCacheMiddleware(next, cacheService);
-//    await middleware.InvokeAsync(context);
-//});
+
 app.MapControllers();
 app.UseMetricServer();
 
@@ -220,4 +128,17 @@ app.MapHealthChecks($"/{basePath}/", new HealthCheckOptions
                 }
 });
 app.UseHealthChecksPrometheusExporter($"/{basePath}/health/metrics");
-app.Run();
+try
+{
+    Log.Information("Starting web application");
+    app.Run();
+}
+catch (Exception ex)
+{
+    Log.Fatal(ex, "Application start-up failed");
+}
+finally
+{
+    Log.CloseAndFlush();
+}
+//app.Run();
