@@ -90,6 +90,7 @@ if (SettingsDependancyInjection.ServiceSettings.EnableSwagger)
         }
     });
 }
+app.UseSerilogRequestLogging();
 app.UseHttpsRedirection();
 app.UseStaticFiles();
 
