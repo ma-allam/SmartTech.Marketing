@@ -39,6 +39,8 @@ namespace SmartTech.Marketing.Application.Contract
             var cachedResponse = await cacheService.GetCacheAsync(cacheKey);
             if (!string.IsNullOrEmpty(cachedResponse))
             {
+                context.Response.Headers["X-Cache-Status"] = "HIT";
+
                 context.Response.ContentType = "application/json";
                 await context.Response.WriteAsync(cachedResponse);
                 return;
@@ -64,7 +66,8 @@ namespace SmartTech.Marketing.Application.Contract
                     await cacheService.SetCacheAsync(entityNames, cacheKey, responseBody);
                     context.Response.Body.Seek(0, SeekOrigin.Begin);
                 }
-
+                // Set header indicating the response is from the database
+                context.Response.Headers["X-Cache-Status"] = "MISS";
                 // Copy the response body back to the original stream
                 await responseBodyStream.CopyToAsync(originalBodyStream);
                 context.Response.Body = originalBodyStream;

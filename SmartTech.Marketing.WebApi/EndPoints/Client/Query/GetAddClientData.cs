@@ -25,6 +25,8 @@ namespace SmartTech.Marketing.WebApi.EndPoints.Client.Query
 
         }
         [Authorize]
+        //[Obsolete("This endpoint is deprecated and will be removed in a future version. Please use the new endpoint at /new-endpoint-route.")]
+        //[ApiVersion("0.0", Deprecated = true)]
         [ApiVersion("0.0")]
         [HttpGet(GetAddClientDataEndPointRequest.Route)]
         [SwaggerOperation(Summary = "GetAddClientData", Description = "GetAddClientData ", OperationId = "SmartTech.Marketing.WebApi.EndPoints.Client.Query.GetAddClientData", Tags = new[] { "SmartTech.Marketing.WebApi.EndPoints.Client" })]
