@@ -67,6 +67,8 @@ namespace SmartTech.Marketing.Application.Business.ContractManagement.Command
                             Notes = dueDate.Notes
                         };
                         _databaseService.ContractDueDates.Add(contractDueDate);
+                        await _databaseService.DBSaveChangesAsync(cancellationToken);
+
                     }
 
                     // Add Contract Image Modes
@@ -79,6 +81,8 @@ namespace SmartTech.Marketing.Application.Business.ContractManagement.Command
                             CreditFactor = imageMode.CreditFactor
                         };
                         _databaseService.ContractImageModes.Add(contractImageMode);
+                        await _databaseService.DBSaveChangesAsync(cancellationToken);
+
                     }
 
                     // Add Contract Image Resolutions
@@ -90,9 +94,11 @@ namespace SmartTech.Marketing.Application.Business.ContractManagement.Command
                             ResolutionInCm = imageResolution.ResolutionInCm,
                             MinOrderAreaSize = imageResolution.MinOrderAreaSize,
                             CreditFactor = imageResolution.CreditFactor,
-                            ContractImageTypeId = imageResolution.ContractImageTypeId
+                            ContractImageTypeId = imageResolution.ContractImageTypeId,
                         };
                         _databaseService.ContractImageResolution.Add(contractImageResolution);
+                        await _databaseService.DBSaveChangesAsync(cancellationToken);
+
                     }
 
                     // Add Contract Order Priorities
@@ -106,6 +112,8 @@ namespace SmartTech.Marketing.Application.Business.ContractManagement.Command
                             CreditFactor = orderPriority.CreditFactor
                         };
                         _databaseService.ContractOrderPriority.Add(contractOrderPriority);
+                        await _databaseService.DBSaveChangesAsync(cancellationToken);
+
                     }
 
                     // Add Contract Payment Information
@@ -122,6 +130,8 @@ namespace SmartTech.Marketing.Application.Business.ContractManagement.Command
                             Notes = paymentInformation.Notes
                         };
                         _databaseService.ContractPaymentInformation.Add(contractPaymentInfo);
+                        await _databaseService.DBSaveChangesAsync(cancellationToken);
+
                     }
 
                     // Add Contract Periods
@@ -136,6 +146,8 @@ namespace SmartTech.Marketing.Application.Business.ContractManagement.Command
                             RemainingCredit = period.RemainingCredit
                         };
                         _databaseService.ContractPeriods.Add(contractPeriod);
+                        await _databaseService.DBSaveChangesAsync(cancellationToken);
+
                     }
 
                     // Add Contract Services
@@ -149,6 +161,8 @@ namespace SmartTech.Marketing.Application.Business.ContractManagement.Command
                             Notes = service.Notes
                         };
                         _databaseService.ContractServices.Add(contractService);
+                        await _databaseService.DBSaveChangesAsync(cancellationToken);
+
                     }
 
                     await _databaseService.DBSaveChangesAsync(cancellationToken);
@@ -223,7 +237,7 @@ namespace SmartTech.Marketing.Application.Business.ContractManagement.Command
                 {
                     await transaction.RollbackAsync(cancellationToken);
                     _logger.LogError(ex, "Error occurred during contract creation");
-                    throw new WebApiException(WebApiExceptionSource.DynamicMessage, ex.Message);
+                    throw new WebApiException(ex,WebApiExceptionSource.FromDataBase, ex.Message);
                 }
             }
 
