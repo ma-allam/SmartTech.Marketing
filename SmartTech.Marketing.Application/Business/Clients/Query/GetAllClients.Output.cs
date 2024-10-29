@@ -1,4 +1,6 @@
-﻿using SmartTech.Marketing.Core.Messages;
+﻿using SmartTech.Marketing.Application.Business.ContractManagement.Query;
+using SmartTech.Marketing.Core.Messages;
+using SmartTech.Marketing.Domain.Entities;
 using System.ComponentModel.DataAnnotations;
 
 namespace SmartTech.Marketing.Application.Business.Clients.Query
@@ -18,6 +20,7 @@ namespace SmartTech.Marketing.Application.Business.Clients.Query
         public string PhoneNumber { get; set; }
         public Data Country { get; set; }
         public Data ClientType { get; set; }
+        public List<ContractDto> Contracts { get; set; }
     }
     public class Data
     {
