@@ -57,7 +57,7 @@ public partial class SmsOrder
     public double TotalOrderAreaInKm { get; set; }
 
     [Column("order_geometry")]
-    public Geometry OrderGeometry { get; set; } = null!;
+    public Geometry? OrderGeometry { get; set; } = null!;
 
     [Column("due_date")]
     public DateOnly DueDate { get; set; }

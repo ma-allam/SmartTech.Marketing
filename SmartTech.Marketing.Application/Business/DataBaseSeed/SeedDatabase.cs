@@ -78,7 +78,7 @@ namespace SmartTech.Marketing.Application.Business.DataBaseSeed
             {
 
                 new ClientType{Id=1,Type="Military"},
-                new ClientType{Id=2,Type="Military"}
+                new ClientType{Id=2,Type="Civilian"}
 
 
             };
@@ -118,8 +118,23 @@ namespace SmartTech.Marketing.Application.Business.DataBaseSeed
             #endregion
             #region System Parameters Seed
             await _databaseService.SysParam.ExecuteDeleteAsync(cancellationToken);
-            _databaseService.SysParam.Add(new SysParam { Id=1, ParamName= "IsAuthorizationRequired",ParamValue=true });
-           await _databaseService.DBSaveChangesAsync(cancellationToken);
+            _databaseService.SysParam.Add(new SysParam { Id = 1, ParamName = "IsAuthorizationRequired", ParamValue = false });
+            await _databaseService.DBSaveChangesAsync(cancellationToken);
+            #endregion
+            #region Order Status seed
+            await _databaseService.SmsOrderStatus.ExecuteDeleteAsync(cancellationToken);
+
+            List<SmsOrderStatus> smsOrderStatus = new List<SmsOrderStatus>
+            {
+
+                new SmsOrderStatus{Id=1,Name="In Progress"},
+                new SmsOrderStatus{Id=2,Name="Completed"},
+                new SmsOrderStatus{Id=3,Name="Cancelled"}
+
+
+            };
+            await _databaseService.SmsOrderStatus.AddRangeAsync(smsOrderStatus);
+            await _databaseService.DBSaveChangesAsync(cancellationToken);
             #endregion
             return output;
         }
