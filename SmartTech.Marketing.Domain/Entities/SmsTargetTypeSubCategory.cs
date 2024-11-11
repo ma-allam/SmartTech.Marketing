@@ -7,6 +7,7 @@ using Microsoft.EntityFrameworkCore;
 namespace SmartTech.Marketing.Domain.Entities;
 
 [Table("sms_target_type_sub_category")]
+[Index("SmsTargetTypeMainCategoryId", Name = "IX_sms_target_type_sub_category_sms_target_type_main_category_~")]
 public partial class SmsTargetTypeSubCategory
 {
     [Key]

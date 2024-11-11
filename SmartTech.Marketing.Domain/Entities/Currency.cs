@@ -6,9 +6,6 @@ using Microsoft.EntityFrameworkCore;
 
 namespace SmartTech.Marketing.Domain.Entities;
 
-/// <summary>
-/// العملات
-/// </summary>
 [Table("currency")]
 public partial class Currency
 {

@@ -6,24 +6,17 @@ using Microsoft.EntityFrameworkCore;
 
 namespace SmartTech.Marketing.Domain.Entities;
 
-/// <summary>
-/// معلومات عن مرفقات العقد
-/// </summary>
 [Table("contract_attachments")]
+[Index("ContractId", Name = "IX_contract_attachments_contract_id")]
 public partial class ContractAttachments
 {
     [Key]
     [Column("id")]
     public int Id { get; set; }
-    [Column("AttachmentId")]
-    public Guid AttachmentId { get; set; }
 
     [Column("name")]
     public string? Name { get; set; }
-    [Column("UploadDate")]
-    public DateOnly UploadDate { get; set; }
 
-    [Column("Tags")]
     public string? Tags { get; set; }
 
     [Column("file_extension")]
@@ -37,6 +30,10 @@ public partial class ContractAttachments
 
     [Column("contract_id")]
     public int? ContractId { get; set; }
+
+    public Guid AttachmentId { get; set; }
+
+    public DateOnly UploadDate { get; set; }
 
     [ForeignKey("ContractId")]
     [InverseProperty("ContractAttachments")]

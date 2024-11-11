@@ -6,10 +6,9 @@ using Microsoft.EntityFrameworkCore;
 
 namespace SmartTech.Marketing.Domain.Entities;
 
-/// <summary>
-/// دقه التصوير سواء للتصوير الحديث او الصور الارشيفيه
-/// </summary>
 [Table("contract_image_resolution")]
+[Index("ContractId", Name = "IX_contract_image_resolution_contract_id")]
+[Index("ContractImageTypeId", Name = "IX_contract_image_resolution_contract_image_type_id")]
 public partial class ContractImageResolution
 {
     [Key]

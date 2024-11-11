@@ -209,7 +209,11 @@ public class SwaggerDefaultValues : IOperationFilter
             {
                 parameter.Description = description.ModelMetadata?.Description;
             }
-
+            // Check for "version" parameter and set default value
+            if (parameter.Name == "version" && parameter.Schema.Default == null)
+            {
+                parameter.Schema.Default = new OpenApiString("0");
+            }
             // Set the default value if available
             if (parameter.Schema.Default == null && description.DefaultValue != null)
             {

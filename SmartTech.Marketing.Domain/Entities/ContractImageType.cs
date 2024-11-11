@@ -6,10 +6,6 @@ using Microsoft.EntityFrameworkCore;
 
 namespace SmartTech.Marketing.Domain.Entities;
 
-/// <summary>
-/// نوع التصوير
-/// حديث او من الارشيف
-/// </summary>
 [Table("contract_image_type")]
 public partial class ContractImageType
 {

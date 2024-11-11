@@ -37,5 +37,6 @@ namespace SmartTech.Marketing.WebApi.EndPoints.Order.Command
         public DateOnly DueDate { get; set; }
 
         public int OrderStatusId { get; set; }
+        public List<int> Services { get; set; }
     }
 }

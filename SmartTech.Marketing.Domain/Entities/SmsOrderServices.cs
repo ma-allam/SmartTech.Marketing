@@ -6,10 +6,9 @@ using Microsoft.EntityFrameworkCore;
 
 namespace SmartTech.Marketing.Domain.Entities;
 
-/// <summary>
-/// الخدمات المتعلقه بكل طلب
-/// </summary>
 [Table("sms_order_services")]
+[Index("OrderId", Name = "IX_sms_order_services_order_id")]
+[Index("ServiceId", Name = "IX_sms_order_services_service_id")]
 public partial class SmsOrderServices
 {
     [Key]

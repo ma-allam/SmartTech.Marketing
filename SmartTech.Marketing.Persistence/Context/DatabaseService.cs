@@ -2,8 +2,8 @@
 using System.Collections.Generic;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
-using NetTopologySuite.Geometries;
 using SmartTech.Marketing.Application.Contract;
+using SmartTech.Marketing.Core.AppSetting;
 using SmartTech.Marketing.Core.Cache;
 using SmartTech.Marketing.Domain.Entities;
 
@@ -12,12 +12,13 @@ namespace SmartTech.Marketing.Persistence.Context;
 public partial class DatabaseService : IdentityDbContext<ApplicationUser>, IDataBaseService
 {
     private readonly ChangeTrackerInterceptor _changeTrackerInterceptor;
+
     public DatabaseService()
     {
     }
 
     public DatabaseService(DbContextOptions<DatabaseService> options, ChangeTrackerInterceptor changeTrackerInterceptor)
-        : base(options)
+         : base(options)
     {
         Database.EnsureCreated();
         _changeTrackerInterceptor = changeTrackerInterceptor;
@@ -33,9 +34,11 @@ public partial class DatabaseService : IdentityDbContext<ApplicationUser>, IData
             .OnDelete(DeleteBehavior.Cascade); // Or another delete behavior as appropriate
 
     }
-    public virtual DbSet<ClientType> ClientType { get; set; }
+
 
     public virtual DbSet<Client> Client { get; set; }
+
+    public virtual DbSet<ClientType> ClientType { get; set; }
 
     public virtual DbSet<ContractAttachments> ContractAttachments { get; set; }
 
@@ -67,6 +70,8 @@ public partial class DatabaseService : IdentityDbContext<ApplicationUser>, IData
 
     public virtual DbSet<SmsOrder> SmsOrder { get; set; }
 
+    public virtual DbSet<SmsOrderImageService> SmsOrderImageService { get; set; }
+
     public virtual DbSet<SmsOrderOpportunities> SmsOrderOpportunities { get; set; }
 
     public virtual DbSet<SmsOrderRoutes> SmsOrderRoutes { get; set; }
@@ -84,350 +89,69 @@ public partial class DatabaseService : IdentityDbContext<ApplicationUser>, IData
     public virtual DbSet<SmsTargetTypeSubCategory> SmsTargetTypeSubCategory { get; set; }
 
     public virtual DbSet<SmsTargets> SmsTargets { get; set; }
-    public DbSet<SysParam> SysParam { get; set; }
 
-
+    public virtual DbSet<SysParam> SysParam { get; set; }
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
 #warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see https://go.microsoft.com/fwlink/?LinkId=723263.
-    {
-        optionsBuilder.UseNpgsql("Server=172.16.30.98:5432;Database=sms;Username=postgres;Password=W0rldE@ter;", x => x.UseNetTopologySuite());
-        optionsBuilder.AddInterceptors(_changeTrackerInterceptor);
-    }
+        => optionsBuilder.UseNpgsql(SettingsDependancyInjection.PosSettings.ConnectionString!, x => x.UseNetTopologySuite());
+
     //protected override void OnModelCreating(ModelBuilder modelBuilder)
     //{
     //    modelBuilder.HasPostgresExtension("postgis");
 
-    //    modelBuilder.Entity<ClientType>(entity =>
+    //    modelBuilder.Entity<AspNetUsers>(entity =>
     //    {
-    //        entity.HasKey(e => e.Id).HasName("client_type_pkey");
-
-    //        entity.ToTable("client_type", tb => tb.HasComment("نوع العميل \nجهه حكومية - عسكرية - مدنيه او اخري"));
-
-    //        entity.Property(e => e.Id).UseIdentityAlwaysColumn();
+    //        entity.HasMany(d => d.Role).WithMany(p => p.User)
+    //            .UsingEntity<Dictionary<string, object>>(
+    //                "AspNetUserRoles",
+    //                r => r.HasOne<AspNetRoles>().WithMany().HasForeignKey("RoleId"),
+    //                l => l.HasOne<AspNetUsers>().WithMany().HasForeignKey("UserId"),
+    //                j =>
+    //                {
+    //                    j.HasKey("UserId", "RoleId");
+    //                    j.HasIndex(new[] { "RoleId" }, "IX_AspNetUserRoles_RoleId");
+    //                });
     //    });
 
-    //    modelBuilder.Entity<Clients>(entity =>
+    //    modelBuilder.Entity<Client>(entity =>
     //    {
-    //        entity.HasKey(e => e.Id).HasName("clients_pkey");
-
-    //        entity.ToTable("clients", tb => tb.HasComment("بيانات العميل \nاسم - نوع - تليفون - ايميل - دولة"));
-
-    //        entity.Property(e => e.Id).UseIdentityAlwaysColumn();
-
-    //        entity.HasOne(d => d.ClientTypeNavigation).WithMany(p => p.Clients)
-    //            .OnDelete(DeleteBehavior.ClientSetNull)
-    //            .HasConstraintName("client_type_fk");
-
-    //        entity.HasOne(d => d.Country).WithMany(p => p.Clients)
-    //            .OnDelete(DeleteBehavior.ClientSetNull)
-    //            .HasConstraintName("country_fk");
+    //        entity.Property(e => e.UserId).HasDefaultValueSql("''::text");
     //    });
 
     //    modelBuilder.Entity<ContractAttachments>(entity =>
     //    {
-    //        entity.HasKey(e => e.Id).HasName("contract_attachments_pkey");
-
-    //        entity.ToTable("contract_attachments", tb => tb.HasComment("معلومات عن مرفقات العقد"));
-
-    //        entity.Property(e => e.Id).UseIdentityAlwaysColumn();
-
-    //        entity.HasOne(d => d.Contract).WithMany(p => p.ContractAttachments).HasConstraintName("contract_fk");
-    //    });
-
-    //    modelBuilder.Entity<ContractDueDates>(entity =>
-    //    {
-    //        entity.HasKey(e => e.Id).HasName("contract_payment_schedule_pkey");
-
-    //        entity.ToTable("contract_due_dates", tb => tb.HasComment("تواريخ السداد للعقد"));
-
-    //        entity.Property(e => e.Id).UseIdentityAlwaysColumn();
-
-    //        entity.HasOne(d => d.Contract).WithMany(p => p.ContractDueDates)
-    //            .OnDelete(DeleteBehavior.ClientSetNull)
-    //            .HasConstraintName("contract_due_date_fk");
-    //    });
-
-    //    modelBuilder.Entity<ContractImageModes>(entity =>
-    //    {
-    //        entity.HasKey(e => e.Id).HasName("image_modes_pkey");
-
-    //        entity.ToTable("contract_image_modes", tb => tb.HasComment("mono\nstereo\ntri Stereo"));
-
-    //        entity.Property(e => e.Id).UseIdentityAlwaysColumn();
-
-    //        entity.HasOne(d => d.Contract).WithMany(p => p.ContractImageModes)
-    //            .OnDelete(DeleteBehavior.ClientSetNull)
-    //            .HasConstraintName("contract_fk");
+    //        entity.Property(e => e.UploadDate).HasDefaultValueSql("'-infinity'::date");
     //    });
 
     //    modelBuilder.Entity<ContractImageResolution>(entity =>
     //    {
-    //        entity.HasKey(e => e.Id).HasName("contract_image_resolution_pkey");
-
-    //        entity.ToTable("contract_image_resolution", tb => tb.HasComment("دقه التصوير سواء للتصوير الحديث او الصور الارشيفيه"));
-
-    //        entity.Property(e => e.Id).UseIdentityAlwaysColumn();
-
-    //        entity.HasOne(d => d.Contract).WithMany(p => p.ContractImageResolution)
-    //            .OnDelete(DeleteBehavior.ClientSetNull)
-    //            .HasConstraintName("contract_fk");
-
-    //        entity.HasOne(d => d.ContractImageType).WithMany(p => p.ContractImageResolution)
-    //            .OnDelete(DeleteBehavior.ClientSetNull)
-    //            .HasConstraintName("contract_image_type_fk");
+    //        entity.HasOne(d => d.ContractImageType).WithMany(p => p.ContractImageResolution).HasConstraintName("FK_contract_image_resolution_contract_image_type_contract_imag~");
     //    });
 
-    //    modelBuilder.Entity<ContractImageType>(entity =>
+    //    modelBuilder.Entity<SmsOrderImageService>(entity =>
     //    {
-    //        entity.HasKey(e => e.Id).HasName("contract_image_type_pkey");
+    //        entity.HasKey(e => e.Id).HasName("sms_order_image_service_pkey");
 
-    //        entity.ToTable("contract_image_type", tb => tb.HasComment("نوع التصوير\nحديث او من الارشيف"));
+    //        entity.Property(e => e.Id).ValueGeneratedNever();
 
-    //        entity.Property(e => e.Id).UseIdentityAlwaysColumn();
-    //    });
-
-    //    modelBuilder.Entity<ContractOrderPriority>(entity =>
-    //    {
-    //        entity.HasKey(e => e.Id).HasName("order_priority_pkey");
-
-    //        entity.ToTable("contract_order_priority", tb => tb.HasComment("اولويه الطلب عاديه عاجله طارئه"));
-
-    //        entity.Property(e => e.Id).UseIdentityAlwaysColumn();
-
-    //        entity.HasOne(d => d.Contract).WithMany(p => p.ContractOrderPriority)
+    //        entity.HasOne(d => d.ContractImageService).WithMany(p => p.SmsOrderImageService)
     //            .OnDelete(DeleteBehavior.ClientSetNull)
-    //            .HasConstraintName("contract_fk");
-    //    });
+    //            .HasConstraintName("contract_image_service_id_FK");
 
-    //    modelBuilder.Entity<ContractPaymentInformation>(entity =>
-    //    {
-    //        entity.HasKey(e => e.Id).HasName("contract_payment_information_pkey");
-
-    //        entity.ToTable("contract_payment_information", tb => tb.HasComment("بيانات الدفع للعقد"));
-
-    //        entity.Property(e => e.Id).UseIdentityAlwaysColumn();
-
-    //        entity.HasOne(d => d.Contract).WithMany(p => p.ContractPaymentInformation)
+    //        entity.HasOne(d => d.SmsOrder).WithMany(p => p.SmsOrderImageService)
     //            .OnDelete(DeleteBehavior.ClientSetNull)
-    //            .HasConstraintName("contract_fk");
-    //    });
-
-    //    modelBuilder.Entity<ContractPaymentType>(entity =>
-    //    {
-    //        entity.HasKey(e => e.Id).HasName("contract_type_pkey");
-
-    //        entity.ToTable("contract_payment_type", tb => tb.HasComment("نوع الدفع كاش او كريدت"));
-
-    //        entity.Property(e => e.Id).UseIdentityAlwaysColumn();
-    //    });
-
-    //    modelBuilder.Entity<ContractPeriods>(entity =>
-    //    {
-    //        entity.HasKey(e => e.Id).HasName("contract_periods_pkey");
-
-    //        entity.ToTable("contract_periods", tb => tb.HasComment("فترات العقد والكريديت المتاح في كل فتره"));
-
-    //        entity.Property(e => e.Id).UseIdentityAlwaysColumn();
-
-    //        entity.HasOne(d => d.Contract).WithMany(p => p.ContractPeriods)
-    //            .OnDelete(DeleteBehavior.ClientSetNull)
-    //            .HasConstraintName("contract_periods_fk");
-    //    });
-
-    //    modelBuilder.Entity<ContractServices>(entity =>
-    //    {
-    //        entity.HasKey(e => e.Id).HasName("contract_services_pkey");
-
-    //        entity.ToTable("contract_services", tb => tb.HasComment("الخدمات المتاحه خلال التعاقد"));
-
-    //        entity.Property(e => e.Id).UseIdentityAlwaysColumn();
-
-    //        entity.HasOne(d => d.Contract).WithMany(p => p.ContractServices)
-    //            .OnDelete(DeleteBehavior.ClientSetNull)
-    //            .HasConstraintName("contract_fk");
-    //    });
-
-    //    modelBuilder.Entity<Contracts>(entity =>
-    //    {
-    //        entity.HasKey(e => e.Id).HasName("contracts_pkey");
-
-    //        entity.ToTable("contracts", tb => tb.HasComment("العقود لكل عميل"));
-
-    //        entity.Property(e => e.Id).UseIdentityAlwaysColumn();
-
-    //        entity.HasOne(d => d.Client).WithMany(p => p.Contracts)
-    //            .OnDelete(DeleteBehavior.ClientSetNull)
-    //            .HasConstraintName("client_fk");
-
-    //        entity.HasOne(d => d.ContractPaymentType).WithMany(p => p.Contracts)
-    //            .OnDelete(DeleteBehavior.ClientSetNull)
-    //            .HasConstraintName("contract_type_fk");
-
-    //        entity.HasOne(d => d.Currency).WithMany(p => p.Contracts)
-    //            .OnDelete(DeleteBehavior.ClientSetNull)
-    //            .HasConstraintName("currency_fk");
-    //    });
-
-    //    modelBuilder.Entity<Country>(entity =>
-    //    {
-    //        entity.HasKey(e => e.Id).HasName("country_pkey");
-
-    //        entity.ToTable("country", tb => tb.HasComment("البلاد "));
-
-    //        entity.Property(e => e.Id).UseIdentityAlwaysColumn();
-    //    });
-
-    //    modelBuilder.Entity<Currency>(entity =>
-    //    {
-    //        entity.HasKey(e => e.Id).HasName("currency_pkey");
-
-    //        entity.ToTable("currency", tb => tb.HasComment("العملات"));
-
-    //        entity.Property(e => e.Id).UseIdentityAlwaysColumn();
-    //    });
-
-    //    modelBuilder.Entity<Satellite>(entity =>
-    //    {
-    //        entity.HasKey(e => e.Id).HasName("satellite_pkey");
-
-    //        entity.Property(e => e.Id).UseIdentityAlwaysColumn();
-    //    });
-
-    //    modelBuilder.Entity<SmsOrder>(entity =>
-    //    {
-    //        entity.HasKey(e => e.Id).HasName("sms_order_pkey");
-
-    //        entity.ToTable("sms_order", tb => tb.HasComment("الطلبات المسجله عن طريق محطه تخطيط المهام"));
-
-    //        entity.Property(e => e.Id).UseIdentityAlwaysColumn();
-
-    //        entity.HasOne(d => d.Client).WithMany(p => p.SmsOrder)
-    //            .OnDelete(DeleteBehavior.ClientSetNull)
-    //            .HasConstraintName("client_fk");
-
-    //        entity.HasOne(d => d.Contract).WithMany(p => p.SmsOrder)
-    //            .OnDelete(DeleteBehavior.ClientSetNull)
-    //            .HasConstraintName("contract_fk");
-
-    //        entity.HasOne(d => d.OrderStatus).WithMany(p => p.SmsOrder)
-    //            .OnDelete(DeleteBehavior.ClientSetNull)
-    //            .HasConstraintName("status_fk");
-    //    });
-
-    //    modelBuilder.Entity<SmsOrderOpportunities>(entity =>
-    //    {
-    //        entity.HasKey(e => e.Id).HasName("sms_order_opportunities_pkey");
-
-    //        entity.Property(e => e.Id).UseIdentityAlwaysColumn();
-
-    //        entity.HasOne(d => d.Order).WithMany(p => p.SmsOrderOpportunities)
-    //            .OnDelete(DeleteBehavior.ClientSetNull)
-    //            .HasConstraintName("order_fk");
-
-    //        entity.HasOne(d => d.Sat).WithMany(p => p.SmsOrderOpportunities)
-    //            .OnDelete(DeleteBehavior.ClientSetNull)
-    //            .HasConstraintName("satellite_fk");
-    //    });
-
-    //    modelBuilder.Entity<SmsOrderRoutes>(entity =>
-    //    {
-    //        entity.HasKey(e => e.Id).HasName("sms_order_routes_pkey");
-
-    //        entity.Property(e => e.Id).UseIdentityAlwaysColumn();
-
-    //        entity.HasOne(d => d.Order).WithMany(p => p.SmsOrderRoutes)
-    //            .OnDelete(DeleteBehavior.ClientSetNull)
-    //            .HasConstraintName("order_fk");
-
-    //        entity.HasOne(d => d.Sat).WithMany(p => p.SmsOrderRoutes)
-    //            .OnDelete(DeleteBehavior.ClientSetNull)
-    //            .HasConstraintName("sat_fk");
-    //    });
-
-    //    modelBuilder.Entity<SmsOrderServices>(entity =>
-    //    {
-    //        entity.HasKey(e => e.Id).HasName("sms_order_services_pkey");
-
-    //        entity.ToTable("sms_order_services", tb => tb.HasComment("الخدمات المتعلقه بكل طلب"));
-
-    //        entity.Property(e => e.Id).UseIdentityAlwaysColumn();
-
-    //        entity.HasOne(d => d.Order).WithMany(p => p.SmsOrderServices)
-    //            .OnDelete(DeleteBehavior.ClientSetNull)
-    //            .HasConstraintName("order_fk");
-
-    //        entity.HasOne(d => d.Service).WithMany(p => p.SmsOrderServices)
-    //            .OnDelete(DeleteBehavior.ClientSetNull)
-    //            .HasConstraintName("service_fk");
-    //    });
-
-    //    modelBuilder.Entity<SmsOrderStatus>(entity =>
-    //    {
-    //        entity.HasKey(e => e.Id).HasName("sms_order_status_pkey");
-
-    //        entity.ToTable("sms_order_status", tb => tb.HasComment("حاله الطلب \nتم التسليم للعميل\nالطلب جاهز للتسليم\nمنتظر الخطه\nجاري التصوير\nفشل"));
-
-    //        entity.Property(e => e.Id).UseIdentityAlwaysColumn();
-    //    });
-
-    //    modelBuilder.Entity<SmsRouteScenes>(entity =>
-    //    {
-    //        entity.HasKey(e => e.Id).HasName("sms_route_scenes_pkey");
-
-    //        entity.Property(e => e.Id).UseIdentityAlwaysColumn();
-
-    //        entity.HasOne(d => d.Route).WithMany(p => p.SmsRouteScenes)
-    //            .OnDelete(DeleteBehavior.ClientSetNull)
-    //            .HasConstraintName("route_fk");
-    //    });
-
-    //    modelBuilder.Entity<SmsSceneTargets>(entity =>
-    //    {
-    //        entity.HasKey(e => e.Id).HasName("sms_scene_targets_pkey");
-
-    //        entity.Property(e => e.Id).UseIdentityAlwaysColumn();
-
-    //        entity.HasOne(d => d.Scene).WithMany(p => p.SmsSceneTargets)
-    //            .OnDelete(DeleteBehavior.ClientSetNull)
-    //            .HasConstraintName("scene_fk");
-
-    //        entity.HasOne(d => d.Target).WithMany(p => p.SmsSceneTargets)
-    //            .OnDelete(DeleteBehavior.ClientSetNull)
-    //            .HasConstraintName("target_fk");
-    //    });
-
-    //    modelBuilder.Entity<SmsTargetTypeMainCategory>(entity =>
-    //    {
-    //        entity.HasKey(e => e.Id).HasName("sms_target_type_main_category_pkey");
-
-    //        entity.Property(e => e.Id).UseIdentityAlwaysColumn();
+    //            .HasConstraintName("sms_order_FK");
     //    });
 
     //    modelBuilder.Entity<SmsTargetTypeSubCategory>(entity =>
     //    {
-    //        entity.HasKey(e => e.Id).HasName("sms_target_type_sub_category_pkey");
-
-    //        entity.Property(e => e.Id).UseIdentityAlwaysColumn();
-
-    //        entity.HasOne(d => d.SmsTargetTypeMainCategory).WithMany(p => p.SmsTargetTypeSubCategory)
-    //            .OnDelete(DeleteBehavior.ClientSetNull)
-    //            .HasConstraintName("sms_target_type_main_category_fk");
+    //        entity.HasOne(d => d.SmsTargetTypeMainCategory).WithMany(p => p.SmsTargetTypeSubCategory).HasConstraintName("FK_sms_target_type_sub_category_sms_target_type_main_category_~");
     //    });
 
     //    modelBuilder.Entity<SmsTargets>(entity =>
     //    {
-    //        entity.HasKey(e => e.Id).HasName("sms_targets_pkey");
-
-    //        entity.Property(e => e.Id).UseIdentityAlwaysColumn();
-
-    //        entity.HasOne(d => d.Country).WithMany(p => p.SmsTargets)
-    //            .OnDelete(DeleteBehavior.ClientSetNull)
-    //            .HasConstraintName("country_fk");
-
-    //        entity.HasOne(d => d.SmsTargetTypeSubCategory).WithMany(p => p.SmsTargets)
-    //            .OnDelete(DeleteBehavior.ClientSetNull)
-    //            .HasConstraintName("sms_target_type_sub_category_fk");
+    //        entity.HasOne(d => d.SmsTargetTypeSubCategory).WithMany(p => p.SmsTargets).HasConstraintName("FK_sms_targets_sms_target_type_sub_category_sms_target_type_su~");
     //    });
 
     //    OnModelCreatingPartial(modelBuilder);

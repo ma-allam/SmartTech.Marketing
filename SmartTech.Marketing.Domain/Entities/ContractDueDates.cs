@@ -6,10 +6,8 @@ using Microsoft.EntityFrameworkCore;
 
 namespace SmartTech.Marketing.Domain.Entities;
 
-/// <summary>
-/// تواريخ السداد للعقد
-/// </summary>
 [Table("contract_due_dates")]
+[Index("ContractId", Name = "IX_contract_due_dates_contract_id")]
 public partial class ContractDueDates
 {
     [Key]

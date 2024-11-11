@@ -6,10 +6,6 @@ using Microsoft.EntityFrameworkCore;
 
 namespace SmartTech.Marketing.Domain.Entities;
 
-/// <summary>
-/// نوع العميل 
-/// جهه حكومية - عسكرية - مدنيه او اخري
-/// </summary>
 [Table("client_type")]
 public partial class ClientType
 {
