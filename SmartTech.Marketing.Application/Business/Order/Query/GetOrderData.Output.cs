@@ -9,9 +9,20 @@ namespace SmartTech.Marketing.Application.Business.Order.Query
         public GetOrderDataHandlerOutput() { }
         public GetOrderDataHandlerOutput(Guid correlationId) : base(correlationId) { }
         public List<ContractImageModeOutput> ContractImageModes { get; set; }
+        public List<ContractImageTypeOutput> ImageTypes { get; set; }
+
         public List<ContractImageResolutionOutput> ContractImageResolutions { get; set; }
         public List<ContractOrderPriorityOutput> ContractOrderPriorities { get; set; }
+        public List<ContractServiceOutput> ContractServices { get; set; }
+
         public List<OrderStatusData> OrderStatus { get; set; }
+    }
+    public class ContractServiceOutput
+    {
+        public int Id { get; set; }
+        public string ServiceName { get; set; }
+        public double ServiceCost { get; set; }
+        public string? Notes { get; set; }
     }
     public class ContractImageModeOutput
     {
@@ -19,7 +30,11 @@ namespace SmartTech.Marketing.Application.Business.Order.Query
         public string Name { get; set; }
         public double CreditFactor { get; set; }
     }
-
+    public class ContractImageTypeOutput
+    {
+        public decimal Id { get; set; }
+        public string Name { get; set; }
+    }
     public class ContractImageResolutionOutput
     {
         public decimal Id { get; set; }

@@ -22,7 +22,8 @@ namespace SmartTech.Marketing.Application.Business.Order.Query
             var contract=await _databaseService.Contracts.Where(o=>o.Id==request.ContractId)
                 .Include(o=>o.ContractImageModes)
                 .Include(o=>o.ContractImageResolution)
-                .Include(o=>o.ContractOrderPriority).FirstOrDefaultAsync();
+                .Include(o=>o.ContractOrderPriority)
+                .Include(o=>o.ContractServices).FirstOrDefaultAsync();
             output.ContractOrderPriorities=contract.ContractOrderPriority.Select(o=>new ContractOrderPriorityOutput
             {
                 Id=o.Id,
@@ -44,12 +45,15 @@ namespace SmartTech.Marketing.Application.Business.Order.Query
                 MinOrderAreaSize=o.MinOrderAreaSize,
                 ResolutionInCm=o.ResolutionInCm
             }).ToList();
+            output.ContractServices=contract.ContractServices.Select(o=>new ContractServiceOutput { Id=o.Id,ServiceCost=o.ServiceCost,ServiceName=o.ServiceName,Notes=o.Notes}).ToList();
+            output.ImageTypes = await _databaseService.ContractImageType.Select(o=>new ContractImageTypeOutput { Id=o.Id,Name=o.Name}).ToListAsync();
             output.OrderStatus=await _databaseService.SmsOrderStatus.Select(o=>new OrderStatusData
 
             {
                 Id=o.Id,
                 Name=o.Name
             }).ToListAsync();
+            
             return output;
         }
     }
