@@ -4,6 +4,7 @@ using SmartTech.Marketing.Core.Messages;
 using SmartTech.Marketing.Domain.Entities;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.ComponentModel.DataAnnotations;
+using SmartTech.Marketing.Application.Business.ContractManagement.Command;
 
 namespace SmartTech.Marketing.Application.Business.Order.Command
 {
@@ -44,7 +45,10 @@ namespace SmartTech.Marketing.Application.Business.Order.Command
         public DateOnly DueDate { get; set; }
 
         public int OrderStatusId { get; set; }
+        public List<int> Services { get; set; }
 
-       
+
+
     }
+    
 }

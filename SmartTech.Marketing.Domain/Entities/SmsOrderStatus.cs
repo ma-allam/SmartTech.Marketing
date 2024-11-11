@@ -6,14 +6,6 @@ using Microsoft.EntityFrameworkCore;
 
 namespace SmartTech.Marketing.Domain.Entities;
 
-/// <summary>
-/// حاله الطلب 
-/// تم التسليم للعميل
-/// الطلب جاهز للتسليم
-/// منتظر الخطه
-/// جاري التصوير
-/// فشل
-/// </summary>
 [Table("sms_order_status")]
 public partial class SmsOrderStatus
 {

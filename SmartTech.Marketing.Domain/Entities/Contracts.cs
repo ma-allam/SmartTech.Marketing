@@ -6,10 +6,10 @@ using Microsoft.EntityFrameworkCore;
 
 namespace SmartTech.Marketing.Domain.Entities;
 
-/// <summary>
-/// العقود لكل عميل
-/// </summary>
 [Table("contracts")]
+[Index("ClientId", Name = "IX_contracts_client_id")]
+[Index("ContractPaymentTypeId", Name = "IX_contracts_contract_payment_type_id")]
+[Index("CurrencyId", Name = "IX_contracts_currency_id")]
 public partial class Contracts
 {
     [Key]
@@ -30,10 +30,6 @@ public partial class Contracts
 
     [Column("total_credit")]
     public double TotalCredit { get; set; }
-    [Column("MinSquareArea")]
-    public double MinSquareArea { get; set; }
-    [Column("AcceptableCloudPerc")]
-    public double AcceptableCloudPerc { get; set; }
 
     [Column("currency_id")]
     public int CurrencyId { get; set; }
@@ -49,6 +45,10 @@ public partial class Contracts
 
     [Column("enabled")]
     public bool Enabled { get; set; }
+
+    public double AcceptableCloudPerc { get; set; }
+
+    public double MinSquareArea { get; set; }
 
     [ForeignKey("ClientId")]
     [InverseProperty("Contracts")]

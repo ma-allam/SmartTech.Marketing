@@ -6,9 +6,6 @@ using Microsoft.EntityFrameworkCore;
 
 namespace SmartTech.Marketing.Domain.Entities;
 
-/// <summary>
-/// نوع الدفع كاش او كريدت
-/// </summary>
 [Table("contract_payment_type")]
 public partial class ContractPaymentType
 {

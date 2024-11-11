@@ -1,23 +1,18 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations.Schema;
 using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.ComponentModel.DataAnnotations.Schema;
+using Microsoft.EntityFrameworkCore;
 
-namespace SmartTech.Marketing.Domain.Entities
+namespace SmartTech.Marketing.Domain.Entities;
+
+public partial class SysParam
 {
-    public class SysParam
-    {
-        [Key]
-        [Column("id")]
-        public int Id { get; set; }
-        [Required]
-        [Column("ParamName")]
-        public string ParamName { get; set; }
-        [Required]
-        [Column("ParamValue")]
-        public bool ParamValue { get; set; }
-    }
+    [Key]
+    [Column("id")]
+    public int Id { get; set; }
+
+    public string ParamName { get; set; } = null!;
+
+    public bool ParamValue { get; set; }
 }

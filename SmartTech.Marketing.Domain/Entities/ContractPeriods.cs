@@ -6,10 +6,8 @@ using Microsoft.EntityFrameworkCore;
 
 namespace SmartTech.Marketing.Domain.Entities;
 
-/// <summary>
-/// فترات العقد والكريديت المتاح في كل فتره
-/// </summary>
 [Table("contract_periods")]
+[Index("ContractId", Name = "IX_contract_periods_contract_id")]
 public partial class ContractPeriods
 {
     [Key]

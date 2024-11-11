@@ -7,6 +7,8 @@ using Microsoft.EntityFrameworkCore;
 namespace SmartTech.Marketing.Domain.Entities;
 
 [Table("sms_scene_targets")]
+[Index("SceneId", Name = "IX_sms_scene_targets_scene_id")]
+[Index("TargetId", Name = "IX_sms_scene_targets_target_id")]
 public partial class SmsSceneTargets
 {
     [Key]

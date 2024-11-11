@@ -6,10 +6,8 @@ using Microsoft.EntityFrameworkCore;
 
 namespace SmartTech.Marketing.Domain.Entities;
 
-/// <summary>
-/// الخدمات المتاحه خلال التعاقد
-/// </summary>
 [Table("contract_services")]
+[Index("ContractId", Name = "IX_contract_services_contract_id")]
 public partial class ContractServices
 {
     [Key]
@@ -31,6 +29,9 @@ public partial class ContractServices
     [ForeignKey("ContractId")]
     [InverseProperty("ContractServices")]
     public virtual Contracts Contract { get; set; } = null!;
+
+    [InverseProperty("ContractImageService")]
+    public virtual ICollection<SmsOrderImageService> SmsOrderImageService { get; set; } = new List<SmsOrderImageService>();
 
     [InverseProperty("Service")]
     public virtual ICollection<SmsOrderServices> SmsOrderServices { get; set; } = new List<SmsOrderServices>();

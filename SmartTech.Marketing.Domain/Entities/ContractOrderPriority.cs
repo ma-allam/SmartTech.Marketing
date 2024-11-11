@@ -6,10 +6,8 @@ using Microsoft.EntityFrameworkCore;
 
 namespace SmartTech.Marketing.Domain.Entities;
 
-/// <summary>
-/// اولويه الطلب عاديه عاجله طارئه
-/// </summary>
 [Table("contract_order_priority")]
+[Index("ContractId", Name = "IX_contract_order_priority_contract_id")]
 public partial class ContractOrderPriority
 {
     [Key]

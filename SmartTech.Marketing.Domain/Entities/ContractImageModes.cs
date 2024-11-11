@@ -6,12 +6,8 @@ using Microsoft.EntityFrameworkCore;
 
 namespace SmartTech.Marketing.Domain.Entities;
 
-/// <summary>
-/// mono
-/// stereo
-/// tri Stereo
-/// </summary>
 [Table("contract_image_modes")]
+[Index("ContractId", Name = "IX_contract_image_modes_contract_id")]
 public partial class ContractImageModes
 {
     [Key]

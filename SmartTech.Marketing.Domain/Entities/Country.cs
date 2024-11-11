@@ -7,9 +7,6 @@ using NetTopologySuite.Geometries;
 
 namespace SmartTech.Marketing.Domain.Entities;
 
-/// <summary>
-/// البلاد 
-/// </summary>
 [Table("country")]
 public partial class Country
 {

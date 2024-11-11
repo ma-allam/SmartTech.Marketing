@@ -8,6 +8,7 @@ using NetTopologySuite.Geometries;
 namespace SmartTech.Marketing.Domain.Entities;
 
 [Table("sms_route_scenes")]
+[Index("RouteId", Name = "IX_sms_route_scenes_route_id")]
 public partial class SmsRouteScenes
 {
     [Key]

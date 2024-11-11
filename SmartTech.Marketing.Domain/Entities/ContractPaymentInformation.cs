@@ -6,10 +6,8 @@ using Microsoft.EntityFrameworkCore;
 
 namespace SmartTech.Marketing.Domain.Entities;
 
-/// <summary>
-/// بيانات الدفع للعقد
-/// </summary>
 [Table("contract_payment_information")]
+[Index("ContractId", Name = "IX_contract_payment_information_contract_id")]
 public partial class ContractPaymentInformation
 {
     [Key]

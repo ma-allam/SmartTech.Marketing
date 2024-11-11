@@ -8,6 +8,8 @@ using NetTopologySuite.Geometries;
 namespace SmartTech.Marketing.Domain.Entities;
 
 [Table("sms_order_opportunities")]
+[Index("OrderId", Name = "IX_sms_order_opportunities_order_id")]
+[Index("SatId", Name = "IX_sms_order_opportunities_sat_id")]
 public partial class SmsOrderOpportunities
 {
     [Key]

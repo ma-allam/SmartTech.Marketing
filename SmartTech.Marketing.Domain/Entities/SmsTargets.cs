@@ -8,6 +8,8 @@ using NetTopologySuite.Geometries;
 namespace SmartTech.Marketing.Domain.Entities;
 
 [Table("sms_targets")]
+[Index("CountryId", Name = "IX_sms_targets_country_id")]
+[Index("SmsTargetTypeSubCategoryId", Name = "IX_sms_targets_sms_target_type_sub_category_id")]
 public partial class SmsTargets
 {
     [Key]

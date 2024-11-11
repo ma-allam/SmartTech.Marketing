@@ -7,10 +7,10 @@ using NetTopologySuite.Geometries;
 
 namespace SmartTech.Marketing.Domain.Entities;
 
-/// <summary>
-/// الطلبات المسجله عن طريق محطه تخطيط المهام
-/// </summary>
 [Table("sms_order")]
+[Index("ClientId", Name = "IX_sms_order_client_id")]
+[Index("ContractId", Name = "IX_sms_order_contract_id")]
+[Index("OrderStatusId", Name = "IX_sms_order_order_status_id")]
 public partial class SmsOrder
 {
     [Key]
@@ -57,7 +57,7 @@ public partial class SmsOrder
     public double TotalOrderAreaInKm { get; set; }
 
     [Column("order_geometry")]
-    public Geometry? OrderGeometry { get; set; } = null!;
+    public Geometry OrderGeometry { get; set; } = null!;
 
     [Column("due_date")]
     public DateOnly DueDate { get; set; }
@@ -76,6 +76,9 @@ public partial class SmsOrder
     [ForeignKey("OrderStatusId")]
     [InverseProperty("SmsOrder")]
     public virtual SmsOrderStatus OrderStatus { get; set; } = null!;
+
+    [InverseProperty("SmsOrder")]
+    public virtual ICollection<SmsOrderImageService> SmsOrderImageService { get; set; } = new List<SmsOrderImageService>();
 
     [InverseProperty("Order")]
     public virtual ICollection<SmsOrderOpportunities> SmsOrderOpportunities { get; set; } = new List<SmsOrderOpportunities>();
