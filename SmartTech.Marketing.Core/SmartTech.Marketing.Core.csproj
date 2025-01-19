@@ -7,6 +7,12 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Auth\SwitchAuth\**" />
+    <EmbeddedResource Remove="Auth\SwitchAuth\**" />
+    <None Remove="Auth\SwitchAuth\**" />
+  </ItemGroup>
+
+  <ItemGroup>
 
 	<PackageReference Include="Microsoft.AspNetCore.Http.Abstractions" Version="2.2.0" />
 	  <PackageReference Include="Microsoft.AspNetCore.Mvc.Versioning.ApiExplorer" Version="5.1.0" />
@@ -50,10 +56,6 @@
 
 	  <PackageReference Include="Portable.BouncyCastle" Version="1.9.0" />
 	  
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="Auth\SwitchAuth\" />
   </ItemGroup>
 
 </Project>
