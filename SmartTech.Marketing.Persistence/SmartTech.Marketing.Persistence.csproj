@@ -19,4 +19,8 @@
     <ProjectReference Include="..\SmartTech.Marketing.Application\SmartTech.Marketing.Application.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Migrations\" />
+  </ItemGroup>
+
 </Project>

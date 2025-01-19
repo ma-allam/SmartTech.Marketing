@@ -30,7 +30,7 @@ namespace SmartTech.Marketing.WebApi.Controllers
             //Country c= new Country { Id=1,CountryName="EG",CountryPrefix="eg"};
             //_dataBaseService.Country.Add(c);
             //_dataBaseService.DBSaveChanges();
-            var t = _dataBaseService.Country.ToList();
+            //var t = _dataBaseService.Country.ToList();
             return Enumerable.Range(1, 5).Select(index => new WeatherForecast
             {
                 

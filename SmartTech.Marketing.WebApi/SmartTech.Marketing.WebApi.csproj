@@ -54,6 +54,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Folder Include="EndPoints\" />
     <Folder Include="wwwroot\" />
   </ItemGroup>
 
